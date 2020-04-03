@@ -1,0 +1,48 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>GAME</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://use.typekit.net/nlq1kdt.js"></script>
+  <script>
+    try {
+      Typekit.load({
+        async: true
+      });
+    } catch (e) {}
+  </script>
+</head>
+
+<body>
+  <div id="container">
+    <video id="background_video" loop muted></video>
+    <div id="video_cover"></div>
+    <div id="overlay"></div>
+
+    <section class="main_content">
+      <div class="head">
+        <h1>The game</h1>
+        <p class="sub_head">Welcome to this text based adventure game</p>
+        <button>Start adventure</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="footer">
+
+  </div>
+
+  <script src="bideo.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    if (window.location.host.indexOf('github.io') !== -1 && window.location.protocol !== "https:") {
+      window.location.protocol = "https";
+    }
+  </script>
+</body>
+
+</html>
