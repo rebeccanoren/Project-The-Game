@@ -85,15 +85,46 @@ h1 {
   font-size: 35px;
 }
 
+
+.neon-first {
+  color: #FB4264;
+  font-size: 70px;
+  text-shadow: 0 0 3vw #F40A35;
+}
+
+.neon-second {
+  color: #426DFB;
+  font-size: 70px;
+  text-shadow: 0 0 3vw #2356FF;
+}
+
+.neon-first {
+  animation: neon-first 2s ease infinite;
+  -moz-animation: neon-first 2s ease infinite;
+  -webkit-animation: neon-first 2s ease infinite;
+}
+
+.neon-second {
+  animation: neon-second 2s linear infinite;
+  -moz-animation: neon-second 2s linear infinite;
+  -webkit-animation: neon-second 2s linear infinite;
+  -o-animation: neon-second 2s linear infinite;
+}
+
 .main_content .sub_head {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
 }
 
 .main_content .info {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
   margin-top: 10px;
+}
+
+.slide-top {
+  -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s both;
+  animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s both;
 }
 
 /* .links {
@@ -164,23 +195,6 @@ body {
 }
 
 
-.neon-first {
-  color: #FB4264;
-  font-size: 70px;
-  text-shadow: 0 0 3vw #F40A35;
-}
-
-.neon-second {
-  color: #426DFB;
-  font-size: 70px;
-  text-shadow: 0 0 3vw #2356FF;
-}
-
-.neon-first {
-  animation: neon-first 2s ease infinite;
-  -moz-animation: neon-first 2s ease infinite;
-  -webkit-animation: neon-first 2s ease infinite;
-}
 
 @keyframes neon-first {
 
@@ -196,12 +210,7 @@ body {
   }
 }
 
-.neon-second {
-  animation: neon-second 2s linear infinite;
-  -moz-animation: neon-second 2s linear infinite;
-  -webkit-animation: neon-second 2s linear infinite;
-  -o-animation: neon-second 2s linear infinite;
-}
+
 
 @keyframes neon-second {
 
@@ -214,5 +223,34 @@ body {
   50% {
     text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
     color: #146C80;
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-top
+ * ----------------------------------------
+ */
+@-webkit-keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(-700px);
+    transform: translateY(-700px);
+  }
+}
+
+@keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(-700px);
+    transform: translateY(-700px);
   }
 }
