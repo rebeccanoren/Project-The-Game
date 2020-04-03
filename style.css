@@ -57,7 +57,7 @@ body {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .main_content {
@@ -70,7 +70,14 @@ body {
   transform: translateY(-50%);
 }
 
-.main_content h1 {
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+h1 {
   text-transform: uppercase;
   font-weight: 600;
   font-family: 'proxima-nova-condensed', Helvetica;
@@ -119,6 +126,11 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: rgba(255, 255, 255, 100);
+  color: #000000;
+}
+
 #footer {
   position: absolute;
   bottom: 0;
@@ -139,4 +151,68 @@ button {
 
 #footer a:last-child {
   float: right;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: table;
+  background-color: black;
+}
+
+
+.neon-first {
+  color: #FB4264;
+  font-size: 70px;
+  text-shadow: 0 0 3vw #F40A35;
+}
+
+.neon-second {
+  color: #426DFB;
+  font-size: 70px;
+  text-shadow: 0 0 3vw #2356FF;
+}
+
+.neon-first {
+  animation: neon-first 2s ease infinite;
+  -moz-animation: neon-first 2s ease infinite;
+  -webkit-animation: neon-first 2s ease infinite;
+}
+
+@keyframes neon-first {
+
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+    color: #FED128;
+  }
+
+  50% {
+    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+    color: #806914;
+  }
+}
+
+.neon-second {
+  animation: neon-second 2s linear infinite;
+  -moz-animation: neon-second 2s linear infinite;
+  -webkit-animation: neon-second 2s linear infinite;
+  -o-animation: neon-second 2s linear infinite;
+}
+
+@keyframes neon-second {
+
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
+  }
+
+  50% {
+    text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
+    color: #146C80;
+  }
 }
