@@ -127,6 +127,34 @@ h1 {
   animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s both;
 }
 
+.scale-up-bottom {
+  -webkit-animation: scale-up-bottom 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  animation: scale-up-bottom 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.name {
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+}
+
+.name input {
+  background-color: transparent;
+  color: #FFFFFF;
+  margin-top: 30px;
+  padding-bottom: 8px;
+  border: none;
+  border-bottom: 1px solid #FFFFFF;
+  font-size: 14px;
+  font-family: 'proxima-nova', Helvetica;
+}
+
+/* .hidden {
+  visibility: hidden;
+} */
+
+
 /* .links {
   margin-top: 50px;
 }
@@ -160,6 +188,8 @@ button {
 button:hover {
   background-color: rgba(255, 255, 255, 100);
   color: #000000;
+  opacity: 0.8;
+  transition: 0.6s;
 }
 
 #footer {
@@ -252,5 +282,69 @@ body {
   100% {
     -webkit-transform: translateY(-700px);
     transform: translateY(-700px);
+  }
+}
+
+
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: orange;
+  }
+}
+
+
+/**
+ * ----------------------------------------
+ * animation scale-up-bottom
+ * ----------------------------------------
+ */
+@-webkit-keyframes scale-up-bottom {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+}
+
+@keyframes scale-up-bottom {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
   }
 }
