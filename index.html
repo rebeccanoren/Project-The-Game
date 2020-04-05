@@ -6,23 +6,29 @@
   <title>THE GAME</title>
 
 
-  <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="favicon//apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-icon-192x192.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/favicon//apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
   <script src="https://use.typekit.net/nlq1kdt.js"></script>
+
+  <!-- Production -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+
 
   <script>
     try {
@@ -35,12 +41,20 @@
 </head>
 
 <body>
-  <embed src="music.mp3" loop="true" autostart="true" width="2" height="0">
+  <embed src="assets/music.mp3" loop="true" autostart="true" width="2" height="0">
   <div id="container">
     <video id="background_video" loop muted></video>
     <div id="video_cover"></div>
     <div id="overlay"></div>
+    <div class="game-information">
+      <a href="#"></a><img src="/assets/info.svg" alt=""><span
+        data-tippy-content="Navigate your way through a messy world. Have fun and try to not die right away.">How
+        to
+        play?</span>
 
+
+
+    </div>
     <section class="main_content">
       <div class="head">
         <div class="title">
@@ -48,13 +62,21 @@
           <h1 class="neon-second">GAME</h1>
         </div>
         <p class="sub_head">Welcome to this text based adventure game</p>
-
-
-
         <button>Start adventure</button>
       </div>
       <div class="name"></div>
+
+      <div class="questions-container hidden">
+        <p class="question" id="text">You find yourself out partying with your friends. What will you order at the bar?
+        </p>
+        <div id="option-buttons">
+          <button>Option 1</button>
+          <button>Option 2</button>
+        </div>
+      </div>
     </section>
+
+
   </div>
 
 
@@ -64,8 +86,8 @@
 
   </div>
 
-  <script src="bideo.js"></script>
-  <script src="main.js"></script>
+  <script src="js/bideo.js"></script>
+  <script src="js/main.js"></script>
 
   <script>
     if (window.location.host.indexOf('github.io') !== -1 && window.location.protocol !== "https:") {
