@@ -50,9 +50,9 @@ tippy('[data-tippy-content]', {
 
 let head = document.querySelector(".head")
 let name = document.querySelector(".name")
-head.addEventListener("click", fadeOut)
+head.addEventListener("click", introInput)
 
-function fadeOut() {
+function introInput() {
   head.classList.add("slide-top")
   setTimeout(function () {
     head.remove();
@@ -63,7 +63,7 @@ function fadeOut() {
   setTimeout(function () {
     input();
   }, 8000);
-  slideTop()
+  head.remove()
 }
 
 function remove() {
@@ -81,7 +81,7 @@ function write() {
   typewriter.pauseFor(0)
     .typeString("Hey stranger, what's your name?")
     .pauseFor(2500)
-    .start();
+    .start()
 }
 
 function input() {
@@ -89,25 +89,39 @@ function input() {
   input.type = "text";
   input.className = "player-name"
   input.placeholder = "Enter your name"
+  const playerName = ""
   document.querySelector('.name').appendChild(input).classList.add("scale-up-bottom");
   input.addEventListener("input", addButton, {
     once: true
   })
 
+
   function addButton() {
-    let button = document.createElement("button");
-    button.id = "next"
-    button.innerHTML = "NEXT";
-    document.querySelector('.name').appendChild(button).classList.add("scale-up-bottom")
+    let buttonStart = document.createElement("button");
+    buttonStart.id = "next"
+    buttonStart.innerHTML = "NEXT";
+    document.querySelector('.name').appendChild(buttonStart).classList.add("scale-up-bottom")
+    buttonStart.addEventListener("click", function () {
+      input.value = playerName
+      console.log(playerName)
+      name.classList.add("slide-top")
+      setTimeout(function () {
+        startGame();
+      }, 3500);
+
+    })
+
   }
 }
 
-function slideTop() {
-  let button = document.querySelector("#next")
-  button.addEventListener("click", button.classList.add("slide-top"))
-  console.log("Hej")
-}
+// function slideTop() {
+//   let buttonNext = document.querySelector("#next")
+//   let name = document.querySelector(".name")
+//   buttonNext.addEventListener("click", name.classList.add("slide-top"))
+//   console.log("Hej")
+// }
 
+// slideTop()
 // Game functionality
 
 const textElement = document.getElementById("text")
@@ -117,6 +131,13 @@ const optionButtonsElement = document.getElementById('option-buttons')
 let state = {}
 
 function startGame() {
+  document.querySelector(".questions-container").classList.remove("hidden");
+  document.querySelector(".name").remove()
+  state = {}
+  showTextNode(1)
+}
+
+function reStart() {
   state = {}
   showTextNode(1)
 }
@@ -147,24 +168,32 @@ function showOption(option) {
 function selectOption(option) {
   const nextTextNodeId = option.nextText
   if (nextTextNodeId <= 0) {
-    return startGame()
+    return reStart()
   }
   state = Object.assign(state, option.setState)
   showTextNode(nextTextNodeId)
 }
 
+
 const textNodes = [{
     id: 1,
     text: "You find yourself out partying with your friends. What will you order at the bar?",
     options: [{
-        text: "Margarita",
+        text: "Margarita 🍸",
         setState: {
           margarita: true
         },
         nextText: 2
       },
       {
-        text: "Water please",
+        text: "Water please 💦",
+        setState: {
+          water: true
+        },
+        nextText: 2
+      },
+      {
+        text: "Beer 🍺",
         setState: {
           water: true
         },
@@ -174,26 +203,77 @@ const textNodes = [{
   },
   {
     id: 2,
-    text: "Nice choice!",
+    text: "Nice choice! What do you do next?",
     options: [{
         text: "Go dance",
-        requiredState: (currentState) => currentState.margarita,
         setState: {
-          margarita: false,
-          sword: true
+          dance: true,
         },
         nextText: 3
       },
       {
-        text: "Flirt",
+        text: "Look for Maya",
         setState: {
-          water: true
+          lookForMaya: true,
         },
-        nextText: 2
-      }
+        nextText: 3
+      },
     ]
   },
 
-]
+  {
+    id: 3,
+    text: "On your way there you see a girl crying, what do you do?",
+    options: [{
+        text: "Comfort the girl",
+        // requiredState: (currentState) => currentState.margarita,
+        setState: {
+          margarita: false,
+        },
+        nextText: 4
+      },
+      {
+        text: "You walk past her",
+        setState: {
+          water: false
+        },
+        nextText: 4
+      },
+    ]
+  },
 
-startGame()
+  {
+    id: 4,
+    text: "You come back to the bar and Maya is still missing.",
+    options: [{
+        text: "Continue search for Maya",
+        requiredState: (currentState) => currentState.lookForMaya,
+        nextText: 5
+      },
+      {
+        text: "Go back to the dancefloor",
+        requiredState: (currentState) => currentState.dance,
+        nextText: 5
+      },
+      {
+        text: "Go to the dancefloor",
+        requiredState: (currentState) => !currentState.dance,
+        nextText: 5
+      },
+      {
+        text: "Look for Maya",
+        requiredState: (currentState) => !currentState.lookForMaya,
+        nextText: 5
+      },
+    ]
+  },
+  {
+    id: 5,
+    text: "The story is currently under construction 🤪",
+    options: [{
+      text: "Play again!",
+      nextText: -1
+    }]
+  },
+
+]

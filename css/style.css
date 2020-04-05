@@ -65,8 +65,9 @@ body {
   flex-direction: column;
   align-items: center;
   /* Vertical center */
-  top: 50%;
-  transform: translateY(-50%);
+  top: 30%;
+  /* transform: translateY(-30%); */
+
 }
 
 .title {
@@ -118,6 +119,11 @@ h1 {
 .main_content .question {
   color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
+}
+
+.questions-container {
+  /* position: fixed;
+  top: 0px; */
 }
 
 .game-information {
