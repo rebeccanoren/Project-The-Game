@@ -59,13 +59,14 @@ body {
 }
 
 .main_content {
+  padding: 0 15px 0px 15px;
   z-index: 2;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* Vertical center */
-  top: 30%;
+  top: 20%;
   /* transform: translateY(-30%); */
 
 }
@@ -112,6 +113,7 @@ h1 {
 }
 
 .main_content .sub_head {
+  padding-bottom: 50px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
 }
@@ -200,6 +202,7 @@ h1 {
   border-bottom: 1px solid #FFFFFF;
   font-size: 14px;
   font-family: 'proxima-nova', Helvetica;
+  margin-bottom: 50px;
 }
 
 .hidden {
@@ -224,8 +227,12 @@ h1 {
   margin-right: 15px;
 } */
 
+.option-buttons {
+  padding-top: 50px;
+}
+
 button {
-  margin: 50px 5px 0 5px;
+  margin: 8px 4px 8px 4px;
   border: 2px solid rgba(255, 255, 255, 0.20);
   border-radius: 60px;
   font-size: 14px;
@@ -233,7 +240,7 @@ button {
   color: #FFFFFF;
   letter-spacing: 1px;
   text-transform: uppercase;
-  padding: 14px 30px;
+  padding: 12px 22px;
   cursor: pointer;
 }
 
@@ -243,6 +250,7 @@ button:hover {
   opacity: 0.8;
   transition: 0.6s;
 }
+
 
 #footer {
   position: absolute;

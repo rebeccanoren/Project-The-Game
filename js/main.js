@@ -87,6 +87,7 @@ function write() {
 function input() {
   let input = document.createElement("input");
   input.type = "text";
+  input.class = "input";
   input.className = "player-name"
   input.placeholder = "Enter your name"
   const playerName = ""
