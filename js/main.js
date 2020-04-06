@@ -50,21 +50,19 @@ let partySound = new Howl({
   volume: 0,
 });
 
-
-
 // Tippy
 tippy('[data-tippy-content]', {
   theme: 'tooltip',
   animation: 'scale',
 });
 
-backgroundMusic.play()
 let head = document.querySelector(".head")
 let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
 startAdventureButton.addEventListener("click", introInput)
 
 function introInput() {
+  backgroundMusic.play()
   head.classList.add("slide-top")
   buttonSound.play();
   setTimeout(function () {
@@ -164,7 +162,7 @@ restart.addEventListener("click", function () {
 function showTextNode(textNodeIndex) {
   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
   textElement.innerHTML = textNode.text
-  textElement.classList.add("scale-up-bottom");
+  textElement.classList.add('animated', "fadeInUp");
   while (optionButtonsElement.firstChild) {
     optionButtonsElement.removeChild(optionButtonsElement.firstChild)
   }
@@ -173,7 +171,7 @@ function showTextNode(textNodeIndex) {
       if (showOption(option)) {
         const button = document.createElement("button")
         button.innerText = option.text
-        button.classList.add("scale-up-bottom");
+        button.classList.add("fadeInUp");
 
         button.addEventListener("click", function () {
           selectOption(option)
