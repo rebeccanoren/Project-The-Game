@@ -140,7 +140,7 @@ function startGame() {
   document.querySelector(".name").remove()
   state = {}
   setTimeout(function () {
-    showTextNode(14);
+    showTextNode(1);
   }, 500);
 }
 
