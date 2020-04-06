@@ -141,7 +141,7 @@ h1 {
   z-index: 2;
   position: relative;
   color: #FFFFFF;
-  margin: 40px 50px;
+  margin: 30px 30px;
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
@@ -189,6 +189,41 @@ h1 {
 .tippy-box[data-theme~='tooltip'][data-placement^='bottom']>.tippy-arrow::before {
   border-bottom-color: #BFCCFF;
 }
+
+.tippy-box[data-theme~='tooltip'][data-placement^='bottom']>.tippy-arrow::before {
+  border-bottom-color: #BFCCFF;
+}
+
+
+.inventory-container .title {
+  z-index: 2;
+  position: relative;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+.inventory-container .title {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.inventory>span {
+  color: #ffffff;
+  font-size: 14px;
+  opacity: 0.3;
+  font-weight: 200;
+}
+
+.inventory-container img {
+  margin-right: 5px;
+  margin-top: -3px;
+}
+
 
 .slide-top {
   -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s both;
@@ -272,7 +307,7 @@ button:hover {
 
 #footer {
   position: absolute;
-  bottom: 0;
+  bottom: 30px;
   left: 0;
   right: 0;
 }

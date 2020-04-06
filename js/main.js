@@ -13,7 +13,7 @@
 
     // autoplay: false,
 
-    isMobile: window.matchMedia('(max-width: 768px)').matches,
+    // isMobile: window.matchMedia('(max-width: 768px)').matches,
 
     // Array of objects containing the src and type
     // of different video formats to add
@@ -56,6 +56,7 @@ tippy('[data-tippy-content]', {
   animation: 'scale',
 });
 
+
 let head = document.querySelector(".head")
 let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
@@ -68,20 +69,15 @@ function introInput() {
   buttonSound.play();
   setTimeout(function () {
     remove(head);
-  }, 2500);
-  setTimeout(function () {
-    write();
-  }, 2000);
-  setTimeout(function () {
-    input();
-  }, 8000);
+  }, 200);
+  write(input);
 }
 
 function remove(element) {
   element.remove()
 }
 
-function write() {
+function write(callback) {
   let div = document.createElement("div");
   document.querySelector('.name').appendChild(div);
 
@@ -89,11 +85,18 @@ function write() {
     loop: false
   });
 
-  typewriter.pauseFor(0)
+  typewriter
+    .pauseFor(0)
     .typeString("Hey stranger, what's your name?")
     .pauseFor(2500)
     .start()
+    .callFunction(callback)
 }
+
+function doneWriting() {
+  alert("Writing is done!");
+}
+
 
 function input() {
   let input = document.createElement("input");
@@ -156,6 +159,7 @@ restart.addEventListener("click", function () {
   startGame()
 })
 
+
 function showTextNode(textNodeIndex) {
   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
   setTimeout(function () {
@@ -203,6 +207,16 @@ function selectOption(option) {
   }
   state = Object.assign(state, option.setState)
   showTextNode(nextTextNodeId)
+
+  function inventory() {
+    let inventory = document.querySelector(".inventory span");
+    let img = document.querySelector(".inventory img");
+    if (state.margarita == true) {
+      img.classList.remove("hidden")
+      inventory.innerHTML = "Margarita x1";
+    }
+  }
+  inventory()
 }
 
 
@@ -241,7 +255,7 @@ const textNodes = [{
       },
       {
         text: "Keep sipping on your drink",
-        nextText: 18
+        nextText: 19
       },
     ]
   },
@@ -410,6 +424,24 @@ const textNodes = [{
         drunk: true
       },
       nextText: 13
+    }, ]
+  },
+
+  {
+    id: 16,
+    text: "Lorem ipsum",
+    options: [{
+      text: "Lorem ipsum",
+      nextText: 13
+    }, ]
+  },
+
+  {
+    id: 17,
+    text: "A Moscow Mule and how about you? The person responds.",
+    options: [{
+      text: "A drink",
+      nextText: 18
     }, ]
   },
 
