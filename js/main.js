@@ -140,7 +140,7 @@ function startGame() {
   document.querySelector(".name").remove()
   state = {}
   setTimeout(function () {
-    showTextNode(1);
+    showTextNode(14);
   }, 500);
 }
 
@@ -198,6 +198,9 @@ function selectOption(option) {
   if (nextTextNodeId <= 0) {
     return reStart()
   }
+  if (nextTextNodeId == 15) {
+    document.querySelector(".questions-container").classList.add("test");
+  }
   state = Object.assign(state, option.setState)
   showTextNode(nextTextNodeId)
 }
@@ -231,72 +234,216 @@ const textNodes = [{
   },
   {
     id: 2,
-    text: "Nice choice! What do you do next?",
+    text: "You notice that someone looks in your direction. What do you do?",
     options: [{
-        text: "Go dance",
-        setState: {
-          dance: true,
-        },
+        text: "Say something",
         nextText: 3
       },
       {
-        text: "Find Julie",
-        setState: {
-          lookForMaya: true,
-        },
-        nextText: 3
+        text: "Keep sipping on your drink",
+        nextText: 18
       },
     ]
   },
 
   {
     id: 3,
-    text: "On your way there you see a girl crying, what do you do?",
+    text: "You turn towards the person. What do you say?",
     options: [{
-        text: "Comfort the girl",
+        text: "What’s your name?",
         // requiredState: (currentState) => currentState.margarita,
-        setState: {
-          margarita: false,
-        },
         nextText: 4
       },
       {
-        text: "You walk past her",
-        setState: {
-          water: false
-        },
-        nextText: 4
+        text: "What are you drinking?",
+        nextText: 17
+      },
+      {
+        text: "Change your mind and quickly look down",
+        nextText: 18
       },
     ]
   },
 
   {
     id: 4,
-    text: "You come back to the bar and Julie is still missing.",
+    text: "Jessie, what is your name?",
     options: [{
-        text: "Continue search for Julie",
-        requiredState: (currentState) => currentState.lookForMaya,
-        nextText: 5
-      },
-      {
-        text: "Go back to the dancefloor",
-        requiredState: (currentState) => currentState.dance,
-        nextText: 5
+      text: "My name is $playername",
+      nextText: 5
+    }, ]
+  },
+
+  {
+    id: 5,
+    text: "Nice to meet you $playername Jessie responds. What do want to do next?",
+    options: [{
+        text: "Continue talk to Jessie",
+        nextText: 6
       },
       {
         text: "Go to the dancefloor",
-        requiredState: (currentState) => !currentState.dance,
-        nextText: 5
-      },
-      {
-        text: "Look for Julie",
-        requiredState: (currentState) => !currentState.lookForMaya,
-        nextText: 5
+        nextText: 13
       },
     ]
   },
+
   {
-    id: 5,
+    id: 6,
+    text: "You find out that Jessie is here with friends from college",
+    options: [{
+        text: "Talk some more with Jessie",
+        nextText: 7
+      },
+      {
+        text: "Buy Jessie a drink",
+        nextText: 8
+      },
+      {
+        text: "Say goodbye and go to the dancefloor",
+        nextText: 13
+      },
+    ]
+  },
+
+  {
+    id: 7,
+    text: "Jessie is working at the city’s health centre. What do you do?",
+    options: [{
+        text: "Tell Jessie that you are here with Julie",
+        nextText: 9
+      },
+      {
+        text: "Buy Jessie a drink",
+        nextText: 8
+      },
+    ]
+  },
+
+  {
+    id: 8,
+    text: "You’ve got the bartenders attention. What do you want to order?",
+    options: [{
+        text: "Two beers",
+        nextText: 10
+      },
+      {
+        text: "Two shots",
+        nextText: 10
+      },
+    ]
+  },
+
+  {
+    id: 10,
+    text: "This seems to be a person that likes to have fun. Jessie offers to pay for the next round. What to you reply?",
+    options: [{
+        text: "No thanks, no more drinks for me",
+        nextText: 11
+      },
+      {
+        text: "HELL YES",
+        nextText: 14
+      },
+    ]
+  },
+
+  {
+    id: 11,
+    text: "Ok, that’s fine. I’ve have to go now, Jessie responds. What do you say?",
+    options: [{
+        text: "Ask for Jessies number",
+        setState: {
+          number: true
+        },
+        nextText: 12
+      },
+      {
+        text: "Say goodbye and go to the dancefloor",
+        nextText: 13
+      },
+    ]
+  },
+
+  {
+    id: 12,
+    text: "Here is my number, call me whenever you like. Bye!",
+    options: [{
+      text: "Say thanks, and go to the dancefloor",
+      nextText: 13
+    }, ]
+  },
+
+  {
+    id: 13,
+    text: "They are playing really great music in this club!",
+    options: [{
+      text: "Dance",
+      nextText: 100
+    }, ]
+  },
+
+  {
+    id: 14,
+    text: "You are taking a shot with Jessie. What’s next?",
+    options: [{
+        text: "Challenge Jessie for a drinking contest",
+        nextText: 15
+      },
+      {
+        text: "Go to the dancefloor",
+        nextText: 13
+      },
+      {
+        text: "Ask for Jessies number",
+        nextText: 12
+      },
+    ]
+  },
+
+  {
+    id: 15,
+    text: "Are you sure that was a great idea?",
+    options: [{
+      text: "No, but go to the dancefloor like a BOSS",
+      setState: {
+        drunk: true
+      },
+      nextText: 13
+    }, ]
+  },
+
+  {
+    id: 18,
+    text: "This seems like a nice person! What’s next?",
+    options: [{
+        text: "Ask for the persons name",
+        nextText: 3
+      },
+      {
+        text: "Go to the dancefloor",
+        nextText: 13
+      },
+    ]
+  },
+
+
+  {
+    id: 19,
+    text: "This feels a bit weird. What do you do now?",
+    options: [{
+      text: "Go to the dancefloor",
+      nextText: 13
+    }, ]
+  },
+
+
+
+
+
+
+  {
+    id: 100,
     text: "The story is currently under construction 🤪",
     options: [{
       text: "Play again!",
