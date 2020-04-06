@@ -1,7 +1,7 @@
 (function () {
-
   var bv = new Bideo();
   bv.init({
+
     // Video element
     videoEl: document.querySelector('#background_video'),
 
@@ -34,26 +34,39 @@
   });
 }());
 
+// Howler Music
+let backgroundMusic = new Howl({
+  src: ['./assets/music.mp3', './assets/music.mp3'],
+  volume: 0.3,
+});
+
+let buttonSound = new Howl({
+  src: ['./assets/button-sound.mp3', './assets/button-sound.mp3']
+});
+
+let partySound = new Howl({
+  src: ['./assets/party-noise.mp3', './party-noise.mp3'],
+  loop: true,
+  volume: 0,
+});
+
+
 
 // Tippy
 tippy('[data-tippy-content]', {
   theme: 'tooltip',
-  content: "Hejehej",
   animation: 'scale',
 });
 
-// Pass the button, the tooltip, and some options, and Popper will do the
-// magic positioning for you:
-
-
-// import Typed from 'typed.js';
-
+backgroundMusic.play()
 let head = document.querySelector(".head")
+let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
-head.addEventListener("click", introInput)
+startAdventureButton.addEventListener("click", introInput)
 
 function introInput() {
   head.classList.add("slide-top")
+  buttonSound.play();
   setTimeout(function () {
     head.remove();
   }, 1500);
@@ -63,11 +76,11 @@ function introInput() {
   setTimeout(function () {
     input();
   }, 8000);
-  head.remove()
+  remove(head)
 }
 
-function remove() {
-  head.remove()
+function remove(element) {
+  element.remove()
 }
 
 function write() {
@@ -103,26 +116,17 @@ function input() {
     buttonStart.innerHTML = "NEXT";
     document.querySelector('.name').appendChild(buttonStart).classList.add("scale-up-bottom")
     buttonStart.addEventListener("click", function () {
+      buttonSound.play();
       input.value = playerName
-      console.log(playerName)
       name.classList.add("slide-top")
       setTimeout(function () {
         startGame();
-      }, 3500);
+      }, 3000);
 
     })
 
   }
 }
-
-// function slideTop() {
-//   let buttonNext = document.querySelector("#next")
-//   let name = document.querySelector(".name")
-//   buttonNext.addEventListener("click", name.classList.add("slide-top"))
-//   console.log("Hej")
-// }
-
-// slideTop()
 // Game functionality
 
 const textElement = document.getElementById("text")
@@ -132,10 +136,16 @@ const optionButtonsElement = document.getElementById('option-buttons')
 let state = {}
 
 function startGame() {
+  backgroundMusic.fade(0.4, 0, 3000);
+  partySound.play()
+  partySound.fade(0, 0.4, 20000);
   document.querySelector(".questions-container").classList.remove("hidden");
   document.querySelector(".name").remove()
   state = {}
-  showTextNode(1)
+  setTimeout(function () {
+    showTextNode(1);
+  }, 3500);
+
 }
 
 function reStart() {
@@ -146,20 +156,26 @@ function reStart() {
 function showTextNode(textNodeIndex) {
   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
   textElement.innerHTML = textNode.text
+  textElement.classList.add("scale-up-bottom");
   while (optionButtonsElement.firstChild) {
     optionButtonsElement.removeChild(optionButtonsElement.firstChild)
   }
+  setTimeout(function () {
+    textNode.options.forEach(option => {
+      if (showOption(option)) {
+        const button = document.createElement("button")
+        button.innerText = option.text
+        button.classList.add("scale-up-bottom");
 
-  textNode.options.forEach(option => {
-    if (showOption(option)) {
-      const button = document.createElement("button")
-      button.innerText = option.text
-      // lägg till styling här
-      button.addEventListener("click", () => selectOption(option))
-      optionButtonsElement.appendChild(button)
+        button.addEventListener("click", function () {
+          selectOption(option)
+          playSound(buttonSound)
+        })
+        optionButtonsElement.appendChild(button)
+      }
+    })
 
-    }
-  })
+  }, 2000);
 }
 
 function showOption(option) {
@@ -213,7 +229,7 @@ const textNodes = [{
         nextText: 3
       },
       {
-        text: "Look for Maya",
+        text: "Find Julie",
         setState: {
           lookForMaya: true,
         },
@@ -245,9 +261,9 @@ const textNodes = [{
 
   {
     id: 4,
-    text: "You come back to the bar and Maya is still missing.",
+    text: "You come back to the bar and Julie is still missing.",
     options: [{
-        text: "Continue search for Maya",
+        text: "Continue search for Julie",
         requiredState: (currentState) => currentState.lookForMaya,
         nextText: 5
       },
@@ -262,7 +278,7 @@ const textNodes = [{
         nextText: 5
       },
       {
-        text: "Look for Maya",
+        text: "Look for Julie",
         requiredState: (currentState) => !currentState.lookForMaya,
         nextText: 5
       },
