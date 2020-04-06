@@ -131,6 +131,7 @@ function input() {
 
 const textElement = document.getElementById("text")
 const optionButtonsElement = document.getElementById('option-buttons')
+const restart = document.getElementById('restart')
 
 //Håller koll på spelet
 let state = {}
@@ -138,7 +139,7 @@ let state = {}
 function startGame() {
   backgroundMusic.fade(0.4, 0, 3000);
   partySound.play()
-  partySound.fade(0, 0.4, 20000);
+  partySound.fade(0, 0.2, 20000);
   document.querySelector(".questions-container").classList.remove("hidden");
   document.querySelector(".name").remove()
   state = {}
@@ -152,6 +153,13 @@ function reStart() {
   state = {}
   showTextNode(1)
 }
+
+restart.addEventListener("click", function () {
+  if (document.contains(head)) {
+    head.remove()
+  }
+  startGame()
+})
 
 function showTextNode(textNodeIndex) {
   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
@@ -169,7 +177,6 @@ function showTextNode(textNodeIndex) {
 
         button.addEventListener("click", function () {
           selectOption(option)
-          playSound(buttonSound)
         })
         optionButtonsElement.appendChild(button)
       }

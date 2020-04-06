@@ -65,10 +65,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Vertical center */
   top: 20%;
-  /* transform: translateY(-30%); */
+}
 
+@media only screen and (min-width: 600px) {
+  .main_content {
+    top: 25%;
+  }
 }
 
 .title {
@@ -137,6 +140,12 @@ h1 {
   justify-content: flex-end;
   align-items: flex-start;
   height: 30px;
+}
+
+.game-information p {
+  margin-right: 30px;
+  opacity: 0.2;
+  cursor: pointer;
 }
 
 .game-information span {
