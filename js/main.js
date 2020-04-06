@@ -61,20 +61,20 @@ let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
 startAdventureButton.addEventListener("click", introInput)
 
+backgroundMusic.play()
+
 function introInput() {
-  backgroundMusic.play()
-  head.classList.add("slide-top")
+  head.classList.add('animated', "fadeOutUp")
   buttonSound.play();
   setTimeout(function () {
-    head.remove();
-  }, 1500);
+    remove(head);
+  }, 2500);
   setTimeout(function () {
     write();
   }, 2000);
   setTimeout(function () {
     input();
   }, 8000);
-  remove(head)
 }
 
 function remove(element) {
@@ -120,9 +120,7 @@ function input() {
       setTimeout(function () {
         startGame();
       }, 3000);
-
     })
-
   }
 }
 // Game functionality
@@ -143,8 +141,7 @@ function startGame() {
   state = {}
   setTimeout(function () {
     showTextNode(1);
-  }, 3500);
-
+  }, 500);
 }
 
 function reStart() {
@@ -161,26 +158,35 @@ restart.addEventListener("click", function () {
 
 function showTextNode(textNodeIndex) {
   const textNode = textNodes.find(textNode => textNode.id === textNodeIndex)
-  textElement.innerHTML = textNode.text
-  textElement.classList.add('animated', "fadeInUp");
+  setTimeout(function () {
+    textElement.innerHTML = textNode.text
+    textElement.classList.remove('animated', "fadeOutUp");
+    textElement.classList.add('animated', "fadeInUp");
+  }, 1000);
   while (optionButtonsElement.firstChild) {
     optionButtonsElement.removeChild(optionButtonsElement.firstChild)
+    textElement.innerHTML = ""
   }
   setTimeout(function () {
     textNode.options.forEach(option => {
       if (showOption(option)) {
         const button = document.createElement("button")
         button.innerText = option.text
-        button.classList.add("fadeInUp");
-
+        button.classList.add('animated', "fadeInUp");
         button.addEventListener("click", function () {
-          selectOption(option)
+          buttonSound.play()
+          textElement.classList.remove('animated', "fadeInUp");
+          textElement.classList.add('animated', "fadeOutUp");
+          button.classList.remove('animated', "fadeInUp");
+          button.classList.add('animated', "fadeOutUp");
+          setTimeout(function () {
+            selectOption(option)
+          }, 1000);
         })
         optionButtonsElement.appendChild(button)
       }
     })
-
-  }, 2000);
+  }, 3000);
 }
 
 function showOption(option) {
