@@ -185,8 +185,8 @@ function showTextNode(textNodeIndex) {
           button.classList.add('animated', "fadeOutUp");
           setTimeout(function () {
             selectOption(option)
-            updateInventory()
-            renderInventory()
+            // updateInventory()
+            // renderInventory()
           }, 1000);
         })
         optionButtonsElement.appendChild(button)
@@ -286,7 +286,7 @@ function getTextNodes(playerName) {
         {
           text: "Beer 🍺",
           setState: {
-            water: true
+            beer: true
           },
           nextText: 2
         }
