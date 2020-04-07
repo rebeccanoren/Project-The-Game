@@ -194,18 +194,18 @@ function showTextNode(textNodeIndex) {
     })
   }, 3000);
 
-  function updateInventory() {
-    if (state.margarita == true) {
-      inventory.margarita.status = true
-    }
-    if (state.margarita == false) {
-      inventory.margarita = false;
-    }
-    // for (let key in state) {
-    //   if state.key == true ?
-    //   inventory[key].status
-    // }
-  }
+  // function updateInventory() {
+  //   if (state.margarita == true) {
+  //     inventory.margarita.status = true
+  //   }
+  //   if (state.margarita == false) {
+  //     inventory.margarita = false;
+  //   }
+  //   // for (let key in state) {
+  //   //   if state.key == true ?
+  //   //   inventory[key].status
+  //   // }
+  // }
 
 
   function showOption(option) {
@@ -222,7 +222,7 @@ function showTextNode(textNodeIndex) {
     }
     state = Object.assign(state, option.setState)
     showTextNode(nextTextNodeId)
-
+    console.log(state)
   }
 }
 // Is updating and showing active items from inventory each question
@@ -298,7 +298,7 @@ function getTextNodes(playerName) {
       options: [{
           text: "Say something",
           setState: {
-            margarita: false
+            margarita: true
           },
           nextText: 3
         },
@@ -345,14 +345,9 @@ function getTextNodes(playerName) {
       id: 5,
       text: `<i>Nice to meet you ${playerName} Jessie responds.</i><br><br> What do want to do next?`,
       options: [{
-          text: "Continue talk to Jessie",
-          nextText: 6
-        },
-        {
-          text: "Go to the dancefloor",
-          nextText: 13
-        },
-      ]
+        text: "Continue talk to Jessie",
+        nextText: 6
+      }, ]
     },
 
     {
@@ -365,10 +360,6 @@ function getTextNodes(playerName) {
         {
           text: "Buy Jessie a drink",
           nextText: 8
-        },
-        {
-          text: "Say goodbye and go to the dancefloor",
-          nextText: 13
         },
       ]
     },
