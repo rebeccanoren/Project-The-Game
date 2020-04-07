@@ -56,7 +56,6 @@ tippy('[data-tippy-content]', {
   animation: 'scale',
 });
 
-
 let head = document.querySelector(".head")
 let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
@@ -156,7 +155,7 @@ restart.addEventListener("click", function () {
   if (document.contains(head)) {
     head.remove()
   } else if (document.contains(name)) {
-    head.remove
+    name.remove
   }
   startGame()
 })
@@ -186,53 +185,85 @@ function showTextNode(textNodeIndex) {
           button.classList.add('animated', "fadeOutUp");
           setTimeout(function () {
             selectOption(option)
+            updateInventory()
+            renderInventory()
           }, 1000);
         })
         optionButtonsElement.appendChild(button)
       }
     })
   }, 3000);
-}
 
-function showOption(option) {
-  return option.requiredState == null || option.requiredState(state)
-}
-
-function selectOption(option) {
-  const nextTextNodeId = option.nextText
-  if (nextTextNodeId <= 0) {
-    return reStart()
+  function updateInventory() {
+    if (state.margarita == true) {
+      inventory.margarita.status = true
+    }
+    if (state.margarita == false) {
+      inventory.margarita = false;
+    }
+    // for (let key in state) {
+    //   if state.key == true ?
+    //   inventory[key].status
+    // }
   }
-  if (nextTextNodeId == 15) {
-    document.querySelector(".questions-container").classList.add("test");
-  }
-  state = Object.assign(state, option.setState)
-  showTextNode(nextTextNodeId)
 
-  //   function inventory() {
-  //     let inventory = document.querySelector(".inventory span");
-  //     let img = document.querySelector(".inventory img");
-  //     if (state.margarita == true) {
-  //       img.classList.remove("hidden")
-  //       inventory.innerHTML = "Margarita x1";
-  //     } else if (state.number == true) {
-  //       img.classList.remove("hidden")
-  //       inventory.innerHTML += ""
-  //     }
-  //   }
-  //   inventory()
+
+  function showOption(option) {
+    return option.requiredState == null || option.requiredState(state)
+  }
+
+  function selectOption(option) {
+    const nextTextNodeId = option.nextText
+    if (nextTextNodeId <= 0) {
+      return reStart()
+    }
+    if (nextTextNodeId == 15) {
+      document.querySelector(".questions-container").classList.add("test");
+    }
+    state = Object.assign(state, option.setState)
+    showTextNode(nextTextNodeId)
+
+  }
+}
+// Is updating and showing active items from inventory each question
+function renderInventory() {
+  document.getElementById('inventory').innerHTML = ''
+  Object.keys(inventory).forEach(item => {
+    if (inventory[item].status === true) {
+      let inventoryDiv = document.getElementById('inventory')
+      let newDiv = document.createElement('div')
+      let img = document.createElement('img');
+      let description = document.createElement('span');
+      img.src = inventory[item].image;
+      description.innerHTML = inventory[item].name
+      newDiv.appendChild(img)
+      newDiv.appendChild(description)
+      inventoryDiv.appendChild(newDiv)
+    }
+  })
+
+  // Update inventory emptystate if there are no items
+  let inventoryDiv = document.getElementById('inventory')
+  if (!inventoryDiv.hasChildNodes()) {
+    let emptyState = document.createElement("span")
+    emptyState.innerHTML = "You have no items :("
+    emptyState.classList.add("empty-state")
+    inventoryDiv.appendChild(emptyState)
+  }
 }
 
-const items = [{
-    name: "margarita",
-    url: "./assets/drink.png"
+const inventory = {
+  number: {
+    name: "Jessies Number",
+    image: "./assets/number.png",
+    status: false,
   },
-
-  {
-    name: "margarita",
-    url: "./assets/drink.png"
+  margarita: {
+    name: "Margarita",
+    image: "./assets/drink.png",
+    status: false,
   },
-]
+}
 
 function getTextNodes(playerName) {
   return [{
@@ -266,6 +297,9 @@ function getTextNodes(playerName) {
       text: "You notice that someone is looking in your direction. What do you do?",
       options: [{
           text: "Say something",
+          setState: {
+            margarita: false
+          },
           nextText: 3
         },
         {
@@ -300,7 +334,7 @@ function getTextNodes(playerName) {
 
     {
       id: 4,
-      text: "Jessie, what is your name?",
+      text: `<i>Jessie, what is your name?</i><br><br> What is your reply?`,
       options: [{
         text: `My name is ${playerName}`,
         nextText: 5
@@ -309,7 +343,7 @@ function getTextNodes(playerName) {
 
     {
       id: 5,
-      text: `Nice to meet you ${playerName} Jessie responds. What do want to do next?`,
+      text: `<i>Nice to meet you ${playerName} Jessie responds.</i><br><br> What do want to do next?`,
       options: [{
           text: "Continue talk to Jessie",
           nextText: 6
@@ -341,7 +375,7 @@ function getTextNodes(playerName) {
 
     {
       id: 7,
-      text: "Jessie is working at the city’s health centre. What do you do?",
+      text: "Jessie is working at the city’s health centre. What is your respond?",
       options: [{
           text: "Tell Jessie that you are here with Julie",
           nextText: 9
@@ -368,6 +402,20 @@ function getTextNodes(playerName) {
     },
 
     {
+      id: 9,
+      text: "Speaking of Julie... where is she? You realise you haven't seen her for a while...",
+      options: [{
+          text: "Look for Julie",
+          nextText: 21
+        },
+        {
+          text: "Stay with Jessie",
+          nextText: 11
+        },
+      ]
+    },
+
+    {
       id: 10,
       text: "This seems to be a person that likes to have fun. Jessie offers to pay for the next round. What to you reply?",
       options: [{
@@ -383,7 +431,7 @@ function getTextNodes(playerName) {
 
     {
       id: 11,
-      text: "Ok, that’s fine. I’ve have to go now, Jessie responds. What do you say?",
+      text: `<i>I’m sorry but I've to go now. It has been nice hanging out with you, Jessie responds.</i><br><br> What do you say?`,
       options: [{
           text: "Ask for Jessies number",
           setState: {
@@ -493,7 +541,7 @@ function getTextNodes(playerName) {
 
     {
       id: 19,
-      text: "This feels a bit weird. What do you do now?",
+      text: "This feels a bit weird. Don't you think? What do you do now?",
       options: [{
           text: "Go to the dancefloor",
           nextText: 13
@@ -503,6 +551,24 @@ function getTextNodes(playerName) {
           nextText: 3
         },
       ]
+    },
+
+    {
+      id: 20,
+      text: `<i>Let’s do it another time.</i><br><br> What’s your reply?`,
+      options: [{
+        text: "Yes, for sure!",
+        nextText: 11
+      }, ]
+    },
+
+    {
+      id: 21,
+      text: `Lorem`,
+      options: [{
+        text: "Yes, for sure!",
+        nextText: 100
+      }, ]
     },
 
     {

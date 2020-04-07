@@ -10,6 +10,10 @@ body {
   overflow: hidden;
 }
 
+br {
+  margin: 30px;
+}
+
 .test {
   z-index: 4;
   -webkit-animation: shake-bottom 8s ease-in-out infinite alternate-reverse both;
@@ -240,6 +244,8 @@ h1 {
 .inventory-container img {
   margin-right: 5px;
   margin-top: -2px;
+  width: 22px;
+  height: 22px;
 }
 
 
