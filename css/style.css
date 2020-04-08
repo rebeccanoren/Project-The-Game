@@ -10,10 +10,6 @@ body {
   overflow: hidden;
 }
 
-br {
-  margin: 30px;
-}
-
 .test {
   z-index: 4;
   -webkit-animation: shake-bottom 8s ease-in-out infinite alternate-reverse both;
@@ -134,13 +130,15 @@ h1 {
 .main_content .question {
   color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
+  max-width: 600px;
 }
 
-/* .questions-container {
-  /* position: fixed;
-  top: 0px;
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-*/
+
 .game-information {
   z-index: 2;
   position: relative;
@@ -330,7 +328,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   color: #000000;
   opacity: 0.8;
   transition: 0.6s;
