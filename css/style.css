@@ -147,18 +147,24 @@ h1 {
   color: #FFFFFF;
   margin: 30px 30px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: flex-start;
   height: 30px;
 }
 
-.game-information p {
+.game-information .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.game-information .container p {
   margin-right: 30px;
   opacity: 0.2;
   cursor: pointer;
 }
 
-.game-information span {
+.game-information .container>span {
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -170,7 +176,7 @@ h1 {
 }
 
 
-.game-information span:hover {
+.game-information .container>span:hover {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 20 4'%3E%3Cstyle type='text/css'%3E.squiggle{animation:shift .4s linear infinite;}@keyframes shift {from {transform:translateX(0);}to {transform:translateX(-20px);}}%3C/style%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='1.5' class='squiggle' d='M0,3.5 c 5,0,5,-3,10,-3 s 5,3,10,3 c 5,0,5,-3,10,-3 s 5,3,10,3'/%3E%3C/svg%3E");
   padding-bottom: 8px;
   background-position: 0 100%;
@@ -324,10 +330,66 @@ button {
 }
 
 button:hover {
-  background-color: rgba(255, 255, 255, 100);
+  background-color: rgba(255, 255, 255, 0.5);
   color: #000000;
   opacity: 0.8;
   transition: 0.6s;
+}
+
+
+button.mute-btn {
+  outline: 0;
+  margin-top: 0px;
+  border-radius: 15px;
+  font-size: 10px;
+  font-weight: 600;
+  background: #5F27CD;
+  border: none;
+  padding: 10px 12px 14px 12px;
+  transition: all .3s ease-out;
+  box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, .5),
+    1px 1px 0 0 #000000,
+    2px 2px 0 0 #000000,
+    3px 3px 0 0 #000000,
+    4px 4px 0 0 #000000,
+    5px 5px 0 0 #000000,
+    6px 6px 0 0 #000000,
+    7px 7px 0 0 #000000,
+    8px 8px 0 0 #000000,
+    9px 9px 0 0 #000000,
+    10px 10px 0 0 #000000,
+    11px 11px 0 0 #000000,
+    12px 12px 0 0 #000000;
+}
+
+button.mute-btn.sound-on {
+  margin-top: 3px;
+  padding: 10px 12px 12px 12px;
+  box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, .6),
+    1px 1px 0 0 #000000,
+    2px 2px 0 0 #000000,
+    3px 3px 0 0 #000000,
+    4px 4px 0 0 #000000,
+    5px 5px 0 0 #000000;
+}
+
+button.mute-btn:hover {
+  color: #FFFFFF;
+}
+
+button.mute-btn img {
+  padding-top: -10px;
+}
+
+button.mute-btn:active {
+  color: #FFFFFF;
+  background-color: #5F27CD;
+  box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, .2),
+    1px 1px 0 0 #000000,
+    2px 2px 0 0 #000000,
+    3px 3px 0 0 #000000,
+    4px 4px 0 0 #000000,
+    5px 5px 0 0 #000000;
 }
 
 

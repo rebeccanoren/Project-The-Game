@@ -37,7 +37,7 @@
 // Howler Music
 let backgroundMusic = new Howl({
   src: ['./assets/music.mp3', './assets/music.mp3'],
-  volume: 0.3,
+  volume: 0.2,
 });
 
 let buttonSound = new Howl({
@@ -59,7 +59,29 @@ tippy('[data-tippy-content]', {
 let head = document.querySelector(".head")
 let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
+let soundOnoff = document.querySelector(".mute-btn")
+let soundSpan = document.querySelector(".mute-btn span")
+let soundImg = document.querySelector(".mute-btn img")
 let playerName = ""
+
+soundOnoff.addEventListener("click", checkSound)
+
+function checkSound() {
+  let sound = document.createElement('img');
+  sound.src = "./assets/sound.svg"
+  if (soundSpan.innerText === "Sound on") {
+    Howler.volume(0.0);
+    soundImg.src = "./assets/muted.svg"
+    soundSpan.innerText = "Muted"
+    soundOnoff.classList.add("sound-on")
+  } else if (soundSpan.innerText === "Muted") {
+    Howler.volume(0.2);
+    soundImg.src = "./assets/sound.svg"
+    soundSpan.innerText = "Sound on"
+    soundOnoff.classList.remove("sound-on")
+  }
+}
+
 
 startAdventureButton.addEventListener("click", introInput)
 
@@ -185,8 +207,8 @@ function showTextNode(textNodeIndex) {
           button.classList.add('animated', "fadeOutUp");
           setTimeout(function () {
             selectOption(option)
-            // updateInventory()
-            // renderInventory()
+            updateInventory()
+            renderInventory()
           }, 1000);
         })
         optionButtonsElement.appendChild(button)
@@ -194,18 +216,18 @@ function showTextNode(textNodeIndex) {
     })
   }, 3000);
 
-  // function updateInventory() {
-  //   if (state.margarita == true) {
-  //     inventory.margarita.status = true
-  //   }
-  //   if (state.margarita == false) {
-  //     inventory.margarita = false;
-  //   }
-  //   // for (let key in state) {
-  //   //   if state.key == true ?
-  //   //   inventory[key].status
-  //   // }
-  // }
+  function updateInventory() {
+    if (state.margarita == true) {
+      inventory.margarita.status = true
+    }
+    if (state.margarita == false) {
+      inventory.margarita = false;
+    }
+    // for (let key in state) {
+    //   if state.key == true ?
+    //   inventory[key].status
+    // }
+  }
 
 
   function showOption(option) {
@@ -253,16 +275,27 @@ function renderInventory() {
 }
 
 const inventory = {
+  margarita: {
+    name: "Margarita",
+    image: "./assets/margarita.png",
+    status: true,
+  },
+  beer: {
+    name: "Beer",
+    image: "./assets/beer.png",
+    status: true,
+  },
+  water: {
+    name: "Water",
+    image: "./assets/number.png",
+    status: true,
+  },
   number: {
     name: "Jessies Number",
     image: "./assets/number.png",
-    status: false,
+    status: true,
   },
-  margarita: {
-    name: "Margarita",
-    image: "./assets/drink.png",
-    status: false,
-  },
+
 }
 
 function getTextNodes(playerName) {
