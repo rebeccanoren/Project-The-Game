@@ -10,6 +10,7 @@ body {
   overflow: hidden;
 }
 
+
 .test {
   z-index: 4;
   -webkit-animation: shake-bottom 8s ease-in-out infinite alternate-reverse both;
@@ -55,13 +56,22 @@ body {
   height: 100%;
 }
 
-#overlay {
+.overlay {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
+}
+
+.gameover {
+  background: rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 
 .main_content {

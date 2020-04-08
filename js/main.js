@@ -74,6 +74,7 @@ let name = document.querySelector(".name")
 let soundOnoff = document.querySelector(".mute-btn")
 let soundSpan = document.querySelector(".mute-btn span")
 let soundImg = document.querySelector(".mute-btn img")
+let background = document.querySelector(".overlay")
 let playerName = ""
 
 soundOnoff.addEventListener("click", checkSound)
@@ -95,7 +96,6 @@ function checkSound() {
 }
 
 startAdventureButton.addEventListener("click", introInput)
-
 backgroundMusic.play()
 
 function introInput() {
@@ -181,10 +181,7 @@ function startGame() {
 }
 
 function reStart() {
-  partySound.play()
-  partySound.fade(0, 0.4, 20000);
-  state = {}
-  showTextNode(1.1)
+  window.location.reload();
 }
 
 restart.addEventListener("click", function () {
@@ -236,6 +233,14 @@ function showTextNode(textNodeIndex) {
 
   function checkIfDead() {
     if (stateGame.dead == true) {
+      let background = document.querySelector(".overlay")
+      background.classList.remove("overlay")
+      background.classList.add("gameover")
+      let gameOverTitle = document.createElement('h1')
+      gameOverTitle.classList.add("neon-first")
+      gameOverTitle.classList.add("gameover-title")
+      gameOverTitle.innerText = "GAMEOVER"
+      document.querySelector(".questions-container").appendChild(gameOverTitle)
       partySound.volume(0.0)
       gameOverSound.play()
       gameOverSound.fade(0, 0.6, 3000);
@@ -351,14 +356,14 @@ function getTextNodes(playerName) {
     },
     {
       id: 1.2,
-      text: "You notice that someone is looking at you and smile. What do you do?",
+      text: "You notice that someone is smiling at you. They look friendly enough. What do you do?",
       options: [{
-          text: "Say something",
+          text: "Strike up a conversation",
           nextText: 1.3
         },
         {
           text: "Keep sipping on your drink",
-          setState: {
+          setGame: {
             boring2: true
           },
           nextText: 1.19
@@ -372,7 +377,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.3,
-      text: " What do you say?",
+      text: "What do you say?",
       options: [{
           text: "What’s your name?",
           nextText: 1.4
@@ -399,7 +404,6 @@ function getTextNodes(playerName) {
 
     {
       id: 1.5,
-      text: `<i>Nice to meet you ${playerName}, Jessie responds.</i><br><br> What do want to do next?`,
       options: [{
         text: "Ask what Jessie is doing for a living",
         nextText: 1.6
@@ -408,7 +412,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.6,
-      text: "Jessie is working at the city’s health centre. You tell him about your work as a...",
+      text: "Jessie is working at the city’s health centre. You tell him about you work as a...",
       options: [{
           text: "Conversation Architect",
           nextText: 1.7
@@ -422,7 +426,7 @@ function getTextNodes(playerName) {
           nextText: 1.7
         },
         {
-          text: "Head of Potato",
+          text: "Head of Potatoes",
           nextText: 1.7
         },
       ]
@@ -490,13 +494,10 @@ function getTextNodes(playerName) {
       text: `<i>I’m sorry but I've to go now. It has been nice hanging out with you, Jessie responds.</i><br><br> What do you say?`,
       options: [{
           text: "Ask for Jessies number",
-          setState: {
-            number: true
-          },
           nextText: 1.12
         },
         {
-          text: "Say goodbye and go to the dancefloor",
+          text: "Say goodbye and go to the dance floor",
           nextText: 2.1
         },
       ]
@@ -507,6 +508,9 @@ function getTextNodes(playerName) {
       text: `<i>Here is my number, call me whenever you like.</i><br><br> What's your respond?`,
       options: [{
         text: "Say thanks, and go to the dancefloor",
+        setState: {
+          number: true
+        },
         nextText: 2.1
       }, ]
     },
@@ -538,12 +542,17 @@ function getTextNodes(playerName) {
       id: 1.15,
       text: "Are you sure that was a great idea?",
       options: [{
-        text: "No, go to the dancefloor like a BOSS",
-        setState: {
-          drunk: true
+          text: "No, go to the dance floor like a BOSS",
+          setStateGame: {
+            drunk: true
+          },
+          nextText: 2.3
         },
-        nextText: 2.3
-      }, ]
+        {
+          text: "Ask for Jessies number",
+          nextText: 1.12
+        },
+      ]
     },
 
     {
@@ -588,9 +597,11 @@ function getTextNodes(playerName) {
       id: 18,
       text: "This seems like a nice person! What’s next?",
       options: [{
-        text: "Ask for the persons name",
-        nextText: 1.4
-      }, ]
+          text: "Ask for the persons name",
+          nextText: 1.4
+        },
+
+      ]
     },
 
 
@@ -598,11 +609,11 @@ function getTextNodes(playerName) {
       id: 1.19,
       text: "This feels a bit weird. Don't you think? What do you do now?",
       options: [{
-          text: "Go to the dancefloor",
+          text: "Go to the dance floor",
           nextText: 2.1
         },
         {
-          text: "Say something",
+          text: "Strike up a conversation",
           nextText: 1.3
         },
         {
@@ -623,7 +634,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.21,
-      text: `You walk through the club and can’t seem to find her anywere. But on your way you found a helium balloon shaped as a bird. It sees cool.`,
+      text: `You walk through the club and can’t seem to find her anywhere. But on your way you found a helium balloon shaped as a bird. It sees cool.`,
       options: [{
         text: "Pick it up and go back to the bar",
         setState: {
@@ -636,7 +647,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.22,
-      text: "Someone is still looking at you and smile.",
+      text: "Perhaps the stranger in the bar could be interesting?",
       options: [{
           text: "Say something",
           nextText: 1.3
@@ -657,16 +668,19 @@ function getTextNodes(playerName) {
       }, ]
     },
 
+
+    // SCENARIO 2
+
     {
       id: 2.1,
       text: "On your way you see a girl. She’s sniffing and does not look like she’s feeling well. What do you do?",
       options: [{
-          text: "Walk up to her and ask how she is feeling",
+          text: "Walk up to her and ask her how she is feeling",
           nextText: 2.2
         },
         {
           text: "Comfort the girl with a friendly hug",
-          setState: {
+          setStateGame: {
             virus: true
           },
           nextText: 2.2
@@ -678,7 +692,203 @@ function getTextNodes(playerName) {
       ]
     },
 
+    {
+      id: 2.2,
+      text: `The girl is thanking you for caring. She shows you a phone she has found on the floor and asks you to take care of it.<br><br>
 
+      What’s your response?`,
+      options: [{
+          text: "Accept",
+          setState: {
+            phone: true
+          },
+          nextText: 2.3
+        },
+        {
+          text: "Decline",
+          nextText: 2.3
+        },
+      ]
+    },
+
+    {
+      id: 2.3,
+      text: `In the corner of your eye you see Julie. What do you do?`,
+      options: [{
+          text: "Follow her",
+          nextText: 2.6
+        },
+        // {
+        //   text: "Go to the dance floor",
+        //   requiredState: (currentState) => currentState.water && !currentState.phone,
+        //   nextText: 2.5
+        // },
+        {
+          text: "Go to the dance floor",
+          nextText: 2.10
+        },
+      ]
+    },
+
+    {
+      id: 2.4,
+      text: `You are a mess. While walking back to the dance floor you trip on a straw and hit your head against the bar. You are dead.`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }, ]
+    },
+
+    {
+      id: 2.5,
+      text: `You are so boring that on your way back to the dance floor you choke on your water and die. Why are you even playing this game? Try again.`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }, ]
+    },
+
+    {
+      id: 2.6,
+      text: `You go outside and can’t see Julie anywhere. However, you find two strangers hanging around.`,
+      options: [{
+        text: "Ask them if they have seen Julie",
+        nextText: 2.7
+      }, ]
+    },
+
+
+    {
+      id: 2.7,
+      text: `<i>The girl with a red jacket? I saw her turn right.</i><br><br>
+
+      Where do you want to go?`,
+      options: [{
+          text: "Go left",
+          nextText: 2.9
+        },
+        {
+          text: "Go right",
+          nextText: 2.14
+        },
+      ]
+    },
+
+    {
+      id: 2.8,
+      text: `Being the drunk skunk that you are, you forget what the girl just said and turn left. Only problem is that turning left doesn’t actually lead to a road, but to a river. You somehow manage to fall over the railing and down to your death. Oh dear, you really are a lightweight.`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }]
+    },
+
+    {
+      id: 2.9,
+      text: `You seems to have trouble with following simple instructions. You are given a second chance. Try again.`,
+      options: [{
+        text: "Thanks for the opportunity",
+        nextText: 2.7
+      }]
+    },
+
+    {
+      id: 2.10,
+      text: `Back at the dance floor you are dancing like there’s no tomorrow for a couple of hours. You’ve had so much fun that the urgency of finding Julie has left your mind. You start feeling exhausted.`,
+      options: [{
+          text: "Find Julie",
+          nextText: 2.11
+        },
+        {
+          text: "Keep on dancing",
+          nextText: 2.11
+        }
+      ]
+    },
+
+    {
+      id: 2.11,
+      text: `Julie is gone. You really need to find her since you’re staying at her place for the weekend while visiting this town. You remember that this isn’t 1964 and you do actually own a phone.`,
+      options: [{
+        text: "Call Julie",
+        nextText: 2.13
+      }, ]
+    },
+
+    {
+      id: 2.13,
+      text: `Julie doesn’t answer her phone. It’s not really a surprise since she’s the worst person you know at remembering to charge her phone.
+      Not having any more options, you lay down on the floor and just fade away. You’re dead.`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }]
+    },
+
+    {
+      id: 2.14,
+      text: `You see her just across the road. She seems to be on her way to jump into a car.`,
+      options: [{
+          text: "Run towards her",
+          nextText: 2.15
+        },
+        {
+          text: "Stop and look for cars",
+          nextText: 2.16
+        }
+      ]
+    },
+
+    {
+      id: 2.15,
+      text: `You run as fast as you can. You get there just as Julie enters the car and the door shuts behind her.  You knock on the window and the door opens.`,
+      options: [{
+        text: "Enter the car",
+        nextText: 3.1
+      }]
+    },
+
+    {
+      id: 2.16,
+      text: `It is night – there are no cars at this time of the day. While waiting for a green light you see Julie enter the car. The car is about to drive off.`,
+      options: [{
+        text: "Try to stop the car",
+        nextText: 2.11
+      }]
+    },
+
+
+    // SCENARIO 2
+
+    {
+      id: 3.1,
+      text: `Entering the car, you see Julie sitting inside looking upset.
+      What do you do?`,
+      options: [{
+          text: "Ask her why she’s sad",
+          nextText: 3.2
+        },
+        {
+          text: "Give her a comforting hug",
+          nextText: 3.2
+        }
+      ]
+    },
+
+
+    {
+      id: 3.2,
+      text: `Julie tells you that she got a call from the hospital and that her mom is very sick. The doctors don’t know how to help since it’s an unknown virus.`,
+      options: [{
+          text: "Tell Julie everything is going to be fine",
+          nextText: 3.3
+        },
+        {
+          text: "Ask Julie what she knows so far ",
+          nextText: 3.3
+        }
+      ]
+    },
 
     {
       id: 100,
