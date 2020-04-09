@@ -286,6 +286,10 @@ h1 {
     font-size: 14px;
     max-width: 340px;
   }
+
+  .questions-container h1 {
+    font-size: 45px;
+  }
 }
 
 
