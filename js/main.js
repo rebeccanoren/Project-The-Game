@@ -38,6 +38,7 @@
 let backgroundMusic = new Howl({
   src: ['./assets/music.mp3', './assets/music.mp3'],
   volume: 0.2,
+  loop: true,
 });
 
 let buttonSound = new Howl({
@@ -60,6 +61,36 @@ let scream = new Howl({
   src: ['./assets/scream.mp3', './assets/scream.mp3'],
   loop: false,
   volume: 0.5,
+});
+
+let outsideSound = new Howl({
+  src: ['./assets/outside-sound.mp3', './assets/outside-sound.mp3'],
+  loop: true,
+  volume: 0.5,
+});
+
+let storeSound = new Howl({
+  src: ['./assets/store.mp3', './assets/store.mp3'],
+  loop: true,
+  volume: 0.6,
+});
+
+let storeSecondsSound = new Howl({
+  src: ['./assets/mall.mp3', './assets/mall.mp3'],
+  loop: true,
+  volume: 0.6,
+});
+
+let winningSound = new Howl({
+  src: ['./assets/winning.mp3', './assets/winning.mp3'],
+  loop: true,
+  volume: 0.8,
+});
+
+let wohoSound = new Howl({
+  src: ['./assets/woho.mp3', './assets/woho.mp3'],
+  loop: true,
+  volume: 0.8,
 });
 
 // Tippy
@@ -237,11 +268,36 @@ function showTextNode(textNodeIndex) {
       gameOverTitle.classList.add("gameover-title")
       gameOverTitle.innerText = "GAMEOVER"
       document.querySelector(".questions-container").appendChild(gameOverTitle)
-      partySound.volume(0.0)
+      stopAllMusic()
       gameOverSound.play()
-      gameOverSound.fade(0, 0.6, 3000);
+      gameOverSound.fade(0, 0.8, 3000);
       scream.play()
     }
+  }
+
+
+  function checkIfWinning() {
+    if (stateGame.winning == true) {
+      let background = document.querySelector(".overlay")
+      background.classList.remove("overlay")
+      background.classList.add("gameover")
+      let gameOverTitle = document.createElement('h1')
+      gameOverTitle.classList.add("neon-second")
+      gameOverTitle.classList.add("gameover-title")
+      gameOverTitle.innerText = "YOU WON!"
+      document.querySelector(".questions-container").appendChild(gameOverTitle)
+      stopAllMusic()
+      winningSound.play()
+      winningSound.fade(0, 1, 3000);
+      wohoSound.play()
+    }
+  }
+
+  function stopAllMusic() {
+    partySound.pause()
+    storeSound.pause()
+    storeSecondsSound.pause()
+    outsideSound.pause()
   }
 
   function showOption(option) {
@@ -257,9 +313,24 @@ function showTextNode(textNodeIndex) {
       document.querySelector(".main_content").classList.add("dizzy");
     }
 
+    if (nextTextNodeId == 2.6) {
+      partySound.pause()
+      outsideSound.play()
+    }
+
+    if (nextTextNodeId == 3.1) {
+      outsideSound.pause()
+    }
+
+    if (nextTextNodeId == 3.8) {
+      storeSound.play()
+      storeSecondsSound.play()
+    }
+
     state = Object.assign(state, option.setState)
     stateGame = Object.assign(stateGame, option.setStateGame)
     checkIfDead()
+    checkIfWinning()
     showTextNode(nextTextNodeId)
   }
 }
@@ -322,6 +393,18 @@ const inventory = {
     image: "./assets/phone.gif",
     status: false,
   },
+  toiletpaper: {
+    name: "Toilet paper",
+    image: "./assets/toiletpaper.png",
+    status: false,
+  },
+  pasta: {
+    name: "Pasta",
+    image: "./assets/pasta.png",
+    status: false,
+  },
+
+
 
 }
 
@@ -333,18 +416,14 @@ function getTextNodes(playerName) {
           text: "Margarita 🍸",
           setState: {
             margarita: true,
-            number: true,
           },
-          nextText: 2.1
+          nextText: 2.3
         },
         {
           text: "Water please 💦",
           setState: {
             water: true,
-            boring: true,
-          },
-          setStateGame: {
-            boring: true,
+            boringFirst: true,
           },
           nextText: 1.2
         },
@@ -354,7 +433,30 @@ function getTextNodes(playerName) {
             beer: true,
           },
           nextText: 1.2
-        }
+        },
+        {
+          text: "Till 2.1",
+          setState: {
+            margarita: true,
+            number: true,
+          },
+          nextText: 2.1
+        },
+        {
+          text: "Till 3.1",
+          setState: {
+            margarita: true,
+            number: true,
+          },
+          nextText: 3.1
+        },
+        {
+          text: "Vinst",
+          setStateGame: {
+            winning: true,
+          },
+          nextText: 3.23,
+        },
       ]
     },
     {
@@ -366,8 +468,8 @@ function getTextNodes(playerName) {
         },
         {
           text: "Keep sipping on your drink",
-          setGame: {
-            boring2: true
+          setState: {
+            boringSecond: true
           },
           nextText: 1.19
         },
@@ -500,7 +602,7 @@ function getTextNodes(playerName) {
       id: 1.12,
       text: `<i>Here is my number, call me whenever you like.</i><br><br> What's your respond?`,
       options: [{
-        text: "Say thanks, and go to the dancefloor",
+        text: "Say thanks, and go to the dance floor",
         setState: {
           number: true
         },
@@ -603,6 +705,9 @@ function getTextNodes(playerName) {
       text: "This feels a bit weird. Don't you think? <br><br>What do you do now?",
       options: [{
           text: "Go to the dance floor",
+          setState: {
+            boringThird: true
+          },
           nextText: 2.1
         },
         {
@@ -730,7 +835,15 @@ function getTextNodes(playerName) {
         },
         {
           text: "Go to the dance floor",
-          requiredState: (currentState) => currentState.boring1 && !currentState.boring2,
+          requiredState: (currentState) => currentState.boringFirst && currentState.boringSecond && currentState.boringThird,
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 2.5
+        },
+        {
+          text: "Go to the dance floor",
+          requiredState: (currentState) => !currentState.boringFirst && !currentState.boringSecond && !currentState.boringThird,
           setStateGame: {
             dead: true,
           },
@@ -746,6 +859,7 @@ function getTextNodes(playerName) {
         },
         {
           text: "Go to the dance floor",
+          requiredState: (currentState) => !currentState.drunk && !currentState.boringSecond && !currentState.boringThird,
           nextText: 2.17
         },
       ]
@@ -830,6 +944,15 @@ function getTextNodes(playerName) {
     },
 
     {
+      id: 2.12,
+      text: `You dance until you drop. Literally. Your dedication to being a party animal is astonishing, It’s just too bad that it led to your instant death.`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }]
+    },
+
+    {
       id: 2.13,
       text: `Julie doesn’t answer her phone. It’s not really a surprise since she’s the worst person you know at remembering to charge her phone.
       Not having any more options, you lay down on the floor and just fade away. You’re dead.`,
@@ -880,7 +1003,7 @@ function getTextNodes(playerName) {
         },
         {
           text: "Keep on dancing",
-          nextText: 2.11,
+          nextText: 2.12,
           setStateGame: {
             dead: true,
           },
@@ -1027,7 +1150,7 @@ function getTextNodes(playerName) {
           text: "Toilet paper",
           nextText: 3.12,
           setState: {
-            toiletPaper: true,
+            toiletpaper: true,
           },
         },
       ]
@@ -1049,35 +1172,114 @@ function getTextNodes(playerName) {
       What do you do?`,
       options: [{
           text: "Run away in fear",
+          setStateGame: {
+            dead: true,
+          },
           nextText: 3.13
         },
         {
           text: "Throw phone",
           requiredState: (currentState) => currentState.phone,
+          setState: {
+            phone: false,
+          },
           nextText: 3.14
         },
         {
           text: "Throw balloon",
           requiredState: (currentState) => currentState.balloon,
+          setState: {
+            ballon: false,
+          },
           nextText: 3.14
         },
         {
           text: "Throw empty glass",
           requiredState: (currentState) => currentState.beer,
+          setState: {
+            beer: false,
+          },
           nextText: 3.14
         },
         {
           text: "Throw empty glass",
           requiredState: (currentState) => currentState.margarita,
+          setState: {
+            margarita: false,
+          },
           nextText: 3.14
         },
         {
           text: "Throw empty glass",
           requiredState: (currentState) => currentState.water,
+          setState: {
+            water: false,
+          },
           nextText: 3.14
         },
       ]
     },
+
+    {
+      id: 3.12,
+      text: `You use all your sneaky skills to get to the toilet paper section. Who needs food when you have other, more urgent needs? Only problem is that someone else got those same urgent needs and wants to steal them.<br><br>
+      What do you do?`,
+      options: [{
+          text: "Run away in fear",
+          nextText: 3.13
+        },
+        {
+          text: "Throw phone",
+          requiredState: (currentState) => currentState.phone,
+          setState: {
+            phone: false,
+          },
+          nextText: 3.14
+        },
+        {
+          text: "Throw balloon",
+          requiredState: (currentState) => currentState.balloon,
+          setState: {
+            ballon: false,
+          },
+          nextText: 3.14
+        },
+        {
+          text: "Throw empty glass",
+          requiredState: (currentState) => currentState.beer,
+          setState: {
+            beer: false,
+          },
+          nextText: 3.14
+        },
+        {
+          text: "Throw empty glass",
+          requiredState: (currentState) => currentState.margarita,
+          setState: {
+            margarita: false,
+          },
+          nextText: 3.14
+        },
+        {
+          text: "Throw empty glass",
+          requiredState: (currentState) => currentState.water,
+          setState: {
+            water: false,
+          },
+          nextText: 3.14
+        },
+      ]
+    },
+
+    {
+      id: 3.13,
+      text: `You have a deep fear of confrontation and run away in fear -  screaming like the weakling you are. It’s not your finest moment and you get another chance to toughen up.`,
+      options: [{
+        text: "Try again!",
+        nextText: -1
+      }, ]
+    },
+
 
     {
       id: 3.14,
