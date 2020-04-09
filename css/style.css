@@ -11,7 +11,7 @@ body {
 }
 
 
-.test {
+.dizzy {
   z-index: 4;
   -webkit-animation: shake-bottom 8s ease-in-out infinite alternate-reverse both;
   animation: shake-bottom 8s ease-in-out infinite alternate-reverse both;
@@ -196,6 +196,7 @@ h1 {
 
 .tippy-box[data-theme~='tooltip'] {
   background-color: #BFCCFF;
+  line-height: 130%;
   color: #1041FF;
   margin-top: 5px;
   margin-right: 20px;
@@ -258,7 +259,6 @@ h1 {
 .inventory-container img {
   margin-right: 5px;
   margin-top: -2px;
-  width: 22px;
   height: 22px;
 }
 

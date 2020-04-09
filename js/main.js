@@ -162,7 +162,6 @@ function input() {
 
 const textElement = document.getElementById("text")
 const optionButtonsElement = document.getElementById('option-buttons')
-const restart = document.getElementById('restart')
 
 //Håller koll på spelet
 let state = {}
@@ -183,13 +182,6 @@ function startGame() {
 function reStart() {
   window.location.reload();
 }
-
-restart.addEventListener("click", function () {
-  head.remove()
-  name.remove()
-  document.querySelector(".questions-container").classList.remove("hidden");
-  reStart()
-})
 
 function showTextNode(textNodeIndex) {
   const textNode = getTextNodes(playerName).find(textNode => textNode.id === textNodeIndex)
@@ -227,6 +219,10 @@ function showTextNode(textNodeIndex) {
 
   function updateInventory() {
     for (let key in state) {
+      if (!inventory[key]) {
+        // Hoppa över ifall key inte finns i inventory.
+        continue
+      }
       state[key] ? inventory[key].status = true : inventory[key].status = false
     }
   }
@@ -258,7 +254,7 @@ function showTextNode(textNodeIndex) {
       return reStart()
     }
     if (nextTextNodeId == 1.15) {
-      document.querySelector(".questions-container").classList.add("test");
+      document.querySelector(".main_content").classList.add("dizzy");
     }
 
     state = Object.assign(state, option.setState)
@@ -311,14 +307,19 @@ const inventory = {
     image: "./assets/water.png",
     status: false,
   },
-  baloon: {
-    name: "Bird baloon",
-    image: "./assets/baloon.png",
+  balloon: {
+    name: "Bird balloon",
+    image: "./assets/balloon.png",
     status: false,
   },
   number: {
     name: "Jessies Number",
     image: "./assets/number.png",
+    status: false,
+  },
+  phone: {
+    name: "Phone",
+    image: "./assets/phone.gif",
     status: false,
   },
 
@@ -331,7 +332,8 @@ function getTextNodes(playerName) {
       options: [{
           text: "Margarita 🍸",
           setState: {
-            margarita: true
+            margarita: true,
+            number: true,
           },
           nextText: 2.1
         },
@@ -339,6 +341,7 @@ function getTextNodes(playerName) {
           text: "Water please 💦",
           setState: {
             water: true,
+            boring: true,
           },
           setStateGame: {
             boring: true,
@@ -414,7 +417,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.6,
-      text: "Jessie is working at the city’s health centre. You tell him about you work as a...",
+      text: `Jessie is working at the city’s health centre.<br><br>You tell him about you work as a...`,
       options: [{
           text: "Conversation Architect",
           nextText: 1.7
@@ -454,11 +457,11 @@ function getTextNodes(playerName) {
       text: "You’ve got the bartenders attention. What do you want to order?",
       options: [{
           text: "Two beers",
-          nextText: 1.10
+          nextText: 1.25
         },
         {
           text: "Two shots",
-          nextText: 1.10
+          nextText: 1.25
         },
       ]
     },
@@ -477,19 +480,7 @@ function getTextNodes(playerName) {
       ]
     },
 
-    {
-      id: 1.10,
-      text: "This seems to be a person that likes to have fun. Jessie offers to pay for the next round. What's your reply?",
-      options: [{
-          text: "No more drinks for me",
-          nextText: 1.11
-        },
-        {
-          text: "HELL YES",
-          nextText: 1.14
-        },
-      ]
-    },
+
 
     {
       id: 1.11,
@@ -609,7 +600,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.19,
-      text: "This feels a bit weird. Don't you think? What do you do now?",
+      text: "This feels a bit weird. Don't you think? <br><br>What do you do now?",
       options: [{
           text: "Go to the dance floor",
           nextText: 2.1
@@ -626,26 +617,16 @@ function getTextNodes(playerName) {
     },
 
     {
-      id: 1.20,
-      text: `<i>Let’s do it another time.</i><br><br> What’s your reply?`,
-      options: [{
-        text: "Yes, for sure!",
-        nextText: 1.11
-      }, ]
-    },
-
-    {
       id: 1.21,
       text: `You walk through the club and can’t seem to find her anywhere. But on your way you found a helium balloon shaped as a bird. It sees cool.`,
       options: [{
         text: "Pick it up and go back to the bar",
         setState: {
-          baloon: true
+          balloon: true
         },
         nextText: 1.22
       }, ]
     },
-
 
     {
       id: 1.22,
@@ -670,6 +651,33 @@ function getTextNodes(playerName) {
       }, ]
     },
 
+    {
+      id: 1.24,
+      text: `<i>Let’s do it another time,</i> Jessie says. <br><br> What’s your reply?`,
+      options: [{
+        text: "Yes, for sure!",
+        nextText: 1.11
+      }, ]
+    },
+
+    {
+      id: 1.25,
+      text: "This seems to be a person that likes to have fun. Jessie offers to pay for the next round. What's your reply?",
+      options: [{
+          text: "No more drinks for me",
+          nextText: 1.24
+        },
+        {
+          text: "HELL YES",
+          nextText: 1.14
+        },
+      ]
+    },
+
+
+
+
+
 
     // SCENARIO 2
 
@@ -682,7 +690,7 @@ function getTextNodes(playerName) {
         },
         {
           text: "Comfort the girl with a friendly hug",
-          setStateGame: {
+          setState: {
             virus: true
           },
           nextText: 2.2
@@ -720,14 +728,25 @@ function getTextNodes(playerName) {
           text: "Follow her",
           nextText: 2.6
         },
-        // {
-        //   text: "Go to the dance floor",
-        //   requiredState: (currentState) => currentState.water && !currentState.phone,
-        //   nextText: 2.5
-        // },
         {
           text: "Go to the dance floor",
-          nextText: 2.10
+          requiredState: (currentState) => currentState.boring1 && !currentState.boring2,
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 2.5
+        },
+        {
+          text: "Go to the dance floor",
+          requiredState: (currentState) => currentState.drunk,
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 2.4
+        },
+        {
+          text: "Go to the dance floor",
+          nextText: 2.17
         },
       ]
     },
@@ -767,7 +786,11 @@ function getTextNodes(playerName) {
       Where do you want to go?`,
       options: [{
           text: "Go left",
-          nextText: 2.9
+          requiredState: (currentState) => !currentState.wentLeft,
+          nextText: 2.9,
+          setState: {
+            wentLeft: true
+          },
         },
         {
           text: "Go right",
@@ -795,25 +818,14 @@ function getTextNodes(playerName) {
     },
 
     {
-      id: 2.10,
-      text: `Back at the dance floor you are dancing like there’s no tomorrow for a couple of hours. You’ve had so much fun that the urgency of finding Julie has left your mind. You start feeling exhausted.`,
-      options: [{
-          text: "Find Julie",
-          nextText: 2.11
-        },
-        {
-          text: "Keep on dancing",
-          nextText: 2.11
-        }
-      ]
-    },
-
-    {
       id: 2.11,
       text: `Julie is gone. You really need to find her since you’re staying at her place for the weekend while visiting this town. You remember that this isn’t 1964 and you do actually own a phone.`,
       options: [{
         text: "Call Julie",
-        nextText: 2.13
+        nextText: 2.13,
+        setStateGame: {
+          dead: true,
+        },
       }, ]
     },
 
@@ -859,8 +871,25 @@ function getTextNodes(playerName) {
       }]
     },
 
+    {
+      id: 2.17,
+      text: `Back at the dance floor you are dancing like there’s no tomorrow for a couple of hours. You’ve had so much fun that the urgency of finding Julie has left your mind. You start feeling exhausted.`,
+      options: [{
+          text: "Find Julie",
+          nextText: 2.11
+        },
+        {
+          text: "Keep on dancing",
+          nextText: 2.11,
+          setStateGame: {
+            dead: true,
+          },
+        }
+      ]
+    },
 
-    // SCENARIO 2
+
+    // SCENARIO 3
 
     {
       id: 3.1,
@@ -886,11 +915,298 @@ function getTextNodes(playerName) {
           nextText: 3.3
         },
         {
-          text: "Ask Julie what she knows so far ",
+          text: "Ask Julie what she knows so far",
           nextText: 3.3
         }
       ]
     },
+
+    {
+      id: 3.3,
+      text: `Julie thanks you and then drops you off at her place. She is going directly to the hospital. You decide to go to sleep and when you wake up Julie is still not home.<br><br> What do you do now?`,
+      options: [{
+          text: "Turn on the TV",
+          nextText: 3.5
+        },
+        {
+          text: "Check your phone ",
+          nextText: 3.6
+        }
+      ]
+    },
+
+    {
+      id: 3.4,
+      text: `Julie tells you that the doctors have never seen anything like it and that she got warned not to touch anyone who seems sick. Julie decides to go to the hospital and drops you off at her place. You decide to go to sleep and when you wake up Julie is still not home.<br><br>
+      What do you do now?`,
+      options: [{
+          text: "Turn on the TV",
+          setState: {
+            watchedTv: true,
+          },
+          nextText: 3.5
+        },
+        {
+          text: "Check your phone",
+          setState: {
+            checkedPhone: true,
+          },
+          nextText: 3.6
+        },
+      ]
+    },
+
+    {
+      id: 3.5,
+      text: `You see a news report about an unknown virus that is quickly spreading throughout the town. You get the directive to stay where you are and not go outside.<br><br>
+      What are you going to do?`,
+      options: [{
+          text: "Check your phone",
+          requiredState: (currentState) => !currentState.checkedPhone,
+          setState: {
+            checkedPhone: true,
+          },
+          nextText: 3.6
+        },
+        {
+          text: "Make breakfast",
+          nextText: 3.7
+        },
+      ]
+    },
+
+    {
+      id: 3.6,
+      text: `You find a forum where people are talking about the virus and how they are hoarding in order to survive the next couple of weeks. You feel your own little hoarding monster awaken. <br><br>
+      What do you do now?`,
+      options: [{
+          text: "Turn on the TV",
+          requiredState: (currentState) => !currentState.watchedTv,
+          setState: {
+            watchedTv: true,
+          },
+          nextText: 3.5
+        },
+        {
+          text: "Make breakfast",
+          nextText: 3.7
+        },
+      ]
+    },
+
+    {
+      id: 3.7,
+      text: `You waltz into the kitchen and like a fresh hipster decide to make an avocado sandwhich that you can show off on Instagram. Only problem is that there is no food in the house.<br><br>
+      What now?`,
+      options: [{
+          text: "Go shop for groceries",
+          nextText: 3.8
+        },
+        {
+          text: "Starve",
+          nextText: 3.9,
+          setStateGame: {
+            dead: true,
+          },
+        },
+      ]
+    },
+
+    {
+      id: 3.8,
+      text: `The supermarket is a MESS. There are people everywhere. It feels like you just entered The Hunger Games and you forgot the brave version of yourself at home. <br><br>
+      What do you buy?`,
+      options: [{
+          text: "Pasta",
+          nextText: 3.11,
+          setState: {
+            pasta: true,
+          },
+        },
+        {
+          text: "Toilet paper",
+          nextText: 3.12,
+          setState: {
+            toiletPaper: true,
+          },
+        },
+      ]
+    },
+
+    {
+      id: 3.9,
+      text: `You feel that if you can’t have your avocado sandwich right this second, life isn’t worth living.
+      You decide to starve to death.`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }, ]
+    },
+
+    {
+      id: 3.11,
+      text: `You dodge a frozen chicken that soars through the skies and take cover behind a shelf. There, you see a lone pack of pasta that you snatch it up. Only problem is that another person got their eyes on your pasta too.<br><br>
+      What do you do?`,
+      options: [{
+          text: "Run away in fear",
+          nextText: 3.13
+        },
+        {
+          text: "Throw phone",
+          requiredState: (currentState) => currentState.phone,
+          nextText: 3.14
+        },
+        {
+          text: "Throw balloon",
+          requiredState: (currentState) => currentState.balloon,
+          nextText: 3.14
+        },
+        {
+          text: "Throw empty glass",
+          requiredState: (currentState) => currentState.beer,
+          nextText: 3.14
+        },
+        {
+          text: "Throw empty glass",
+          requiredState: (currentState) => currentState.margarita,
+          nextText: 3.14
+        },
+        {
+          text: "Throw empty glass",
+          requiredState: (currentState) => currentState.water,
+          nextText: 3.14
+        },
+      ]
+    },
+
+    {
+      id: 3.14,
+      text: `You boil over with animalistic instincts and with a mightly war cry, you throw the item at your nemesis. Ha! They don’t got a chance! Congratulations, you are the undefeated grocery champ. <br><br>
+      Your phone starts to ring, what do you do?`,
+      options: [{
+          text: "Answer",
+          nextText: 3.15,
+        },
+        {
+          text: "Throw it at the wall",
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 3.16,
+        },
+      ]
+    },
+
+    {
+      id: 3.15,
+      text: `Its Julie. She’s crying and tells you that her mom didn’t make it. She tells you that she’s on her way home since the town is going into a lockdown.<br><br> There’s no longer any time for dillydallying and you need to decide what to do next.`,
+      options: [{
+          text: "Stay at Julie’s place",
+          requiredState: (currentState) => currentState.number && !currentState.virus,
+          nextText: 3.17
+        },
+        {
+          text: "Stay at Julie’s place",
+          requiredState: (currentState) => !currentState.number,
+          nextText: 3.18
+        },
+        {
+          text: "Stay at Julie’s place",
+          requiredState: (currentState) => currentState.virus,
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 3.21
+        },
+        {
+          text: "Go all the way back to your own place",
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 3.19,
+        },
+      ]
+    },
+
+    {
+      id: 3.16,
+      text: `Why did you do this? How is this going to help you? You just wanted to be difficult, didn’t you?`,
+      options: [{
+        text: "Try again!",
+        nextText: -1
+      }, ]
+    },
+
+    {
+      id: 3.17,
+      text: `You decide to stay at Julie’s place. It is, after all, the smartest choice considering the lockdown. She gets home and now you two need a plan. You remember that Jessie from the club is a doctor and might be able to help. <br><br> What do you do?`,
+      options: [{
+          text: "Call Jessie",
+          setStateGame: {
+            winning: true,
+          },
+          nextText: 3.23,
+        },
+        {
+          text: "Build a pillow fort with Julie",
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 3.22,
+        },
+      ]
+    },
+
+    {
+      id: 3.18,
+      text: `You decide to stay at Julie’s place. It is, after all, the smartest choice considering the lockdown. She gets home and now you two need a plan. You remember that Jessie from the club is a doctor and might be able to help. <br><br> What do you do?`,
+      options: [{
+        text: "Build a pillow fort with Julie",
+        setStateGame: {
+          dead: true,
+        },
+        nextText: 3.22,
+      }, ]
+    },
+
+    {
+      id: 3.19,
+      text: `You decide to take all the information about the virus that you’ve gotten, and throw it in the trash. The town is in lockdown and there’s no way to get home. You’re now dead.`,
+      options: [{
+        text: "Try again!",
+        nextText: -1
+      }, ]
+    },
+
+    {
+      id: 3.21,
+      text: `You decide to stay at Julie’s place. It is after all the smartest choice considering the lockdown. You suddenly start to feel ill. Come to think about it, the girl you hugged in the club was also looking quite ill. Maybe her sniffling wasn’t from crying...? You die on the spot, it must be a record of the quickest death-by-virus ever. Congratulations.<br><br> You got the “At Least You Tried” end. Ouch, you really need to be more careful. But hey, at least you got to the end!`,
+      options: [{
+        text: "Try again!",
+        nextText: -1
+      }, ]
+    },
+
+
+    {
+      id: 3.22,
+      text: `You and Julie build a first class pillow fort. You’re quite proud, if you may say so yourself. It’s an honorable way to end your days. Sadly, you got no knowledge what-so-ever in how to survive the unknown virus and in the end it catches up to you. You did a valiant effort and will always be remebered as ${playerName} - The Lord of Pillow Forts!`,
+      options: [{
+        text: "Try again!",
+        nextText: -1
+      }, ]
+    },
+
+    {
+      id: 3.23,
+      text: `You decide to call Jessie. Jessie picks up the phone and is happy to help. Jessie guides you to survive this virus and you come out on top of the world. Or maybe not the world but at least you survive and that is after all the important bits, right? <br><br>
+      You got the “Surviving Like a BOSS” end. Great job!`,
+      options: [{
+        text: "Play again!",
+        nextText: -1
+      }, ]
+    },
+
 
     {
       id: 100,
