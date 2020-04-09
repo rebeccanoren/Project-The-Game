@@ -541,7 +541,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.6,
-      text: `Jessie is working at the city’s health centre as a doctor.<br><br>You tell him about you work as a...`,
+      text: `Jessie is working at the city’s health centre as a doctor. You tell him about you work as a...`,
       options: [{
           text: "Conversation Architect",
           nextText: 1.7
@@ -771,7 +771,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.23,
-      text: "You enter the bathroom. The door shuts behind you with a bang. Slightly panicked you turn the handle. The door is stuck. You’ve managed to lock yourself in and the music is too loud for anyone to hear your screams for help. Good job.",
+      text: `You enter the bathroom. The door shuts behind you with a bang. Slightly panicked you turn the handle. The door is stuck. You’ve managed to lock yourself in and the music is too loud for anyone to hear your screams for help. Good job ${playerName}`,
       options: [{
         text: "Try again!",
         nextText: -1
