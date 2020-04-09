@@ -333,7 +333,7 @@ function getTextNodes(playerName) {
           setState: {
             margarita: true
           },
-          nextText: 1.2
+          nextText: 2.1
         },
         {
           text: "Water please 💦",
@@ -369,7 +369,7 @@ function getTextNodes(playerName) {
           nextText: 1.19
         },
         {
-          text: "Look around for your friend Julie",
+          text: "Look for your friend Julie",
           nextText: 1.16
         },
       ]
@@ -404,6 +404,8 @@ function getTextNodes(playerName) {
 
     {
       id: 1.5,
+      text: `<i>Nice to meet you ${playerName},</i> Jessie responds. <br><br>
+      What do want to do next?`,
       options: [{
         text: "Ask what Jessie is doing for a living",
         nextText: 1.6
@@ -594,7 +596,7 @@ function getTextNodes(playerName) {
     },
 
     {
-      id: 18,
+      id: 1.18,
       text: "This seems like a nice person! What’s next?",
       options: [{
           text: "Ask for the persons name",
