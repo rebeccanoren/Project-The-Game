@@ -93,6 +93,12 @@ let wohoSound = new Howl({
   volume: 0.8,
 });
 
+let TvSound = new Howl({
+  src: ['./assets/tv-sound.mp3', './assets/tv-sound.mp3'],
+  loop: false,
+  volume: 1,
+});
+
 // Tippy
 tippy('[data-tippy-content]', {
   theme: 'tooltip',
@@ -322,8 +328,24 @@ function showTextNode(textNodeIndex) {
       outsideSound.pause()
     }
 
+    if (nextTextNodeId == 3.3) {
+      if (state.drunk == true) {
+        document.querySelector(".main_content").classList.remove("dizzy");
+      }
+    }
+
+
+    if (nextTextNodeId == 3.5) {
+      TvSound.play()
+    }
+
     if (nextTextNodeId == 3.8) {
       storeSound.play()
+      storeSecondsSound.play()
+    }
+
+    if (nextTextNodeId == 3.18 || nextTextNodeId == 3.17) {
+      storeSound.pause()
       storeSecondsSound.play()
     }
 
@@ -417,7 +439,7 @@ function getTextNodes(playerName) {
           setState: {
             margarita: true,
           },
-          nextText: 2.3
+          nextText: 1.2
         },
         {
           text: "Water please 💦",
@@ -434,29 +456,29 @@ function getTextNodes(playerName) {
           },
           nextText: 1.2
         },
-        {
-          text: "Till 2.1",
-          setState: {
-            margarita: true,
-            number: true,
-          },
-          nextText: 2.1
-        },
-        {
-          text: "Till 3.1",
-          setState: {
-            margarita: true,
-            number: true,
-          },
-          nextText: 3.1
-        },
-        {
-          text: "Vinst",
-          setStateGame: {
-            winning: true,
-          },
-          nextText: 3.23,
-        },
+        // {
+        //   text: "Full",
+        //   setState: {
+        //     margarita: true,
+        //     number: true,
+        //   },
+        //   nextText: 1.14
+        // },
+        // {
+        //   text: "Till 3.1",
+        //   setState: {
+        //     margarita: true,
+        //     number: true,
+        //   },
+        //   nextText: 3.1
+        // },
+        // {
+        //   text: "Vinst",
+        //   setStateGame: {
+        //     winning: true,
+        //   },
+        //   nextText: 3.23,
+        // },
       ]
     },
     {
@@ -519,7 +541,7 @@ function getTextNodes(playerName) {
 
     {
       id: 1.6,
-      text: `Jessie is working at the city’s health centre.<br><br>You tell him about you work as a...`,
+      text: `Jessie is working at the city’s health centre as a doctor.<br><br>You tell him about you work as a...`,
       options: [{
           text: "Conversation Architect",
           nextText: 1.7
@@ -638,7 +660,7 @@ function getTextNodes(playerName) {
       text: "Are you sure that was a great idea?",
       options: [{
           text: "No, go to the dance floor like a BOSS",
-          setStateGame: {
+          setState: {
             drunk: true
           },
           nextText: 2.3
@@ -833,6 +855,7 @@ function getTextNodes(playerName) {
           text: "Follow her",
           nextText: 2.6
         },
+        //Boring state
         {
           text: "Go to the dance floor",
           requiredState: (currentState) => currentState.boringFirst && currentState.boringSecond && currentState.boringThird,
@@ -841,14 +864,16 @@ function getTextNodes(playerName) {
           },
           nextText: 2.5
         },
-        {
-          text: "Go to the dance floor",
-          requiredState: (currentState) => !currentState.boringFirst && !currentState.boringSecond && !currentState.boringThird,
-          setStateGame: {
-            dead: true,
-          },
-          nextText: 2.5
-        },
+
+        // {
+        //   text: "Go to the dance floor",
+        //   requiredState: (currentState) => !currentState.boringFirst && !currentState.boringSecond && !currentState.boringThird,
+        //   setStateGame: {
+        //     dead: true,
+        //   },
+        //   nextText: 2.5
+        // },
+        //Drunk
         {
           text: "Go to the dance floor",
           requiredState: (currentState) => currentState.drunk,
@@ -857,8 +882,9 @@ function getTextNodes(playerName) {
           },
           nextText: 2.4
         },
+        //Normal
         {
-          text: "Go to the dance floor",
+          text: "Go inside",
           requiredState: (currentState) => !currentState.drunk && !currentState.boringSecond && !currentState.boringThird,
           nextText: 2.17
         },
@@ -867,7 +893,7 @@ function getTextNodes(playerName) {
 
     {
       id: 2.4,
-      text: `You are a mess. While walking back to the dance floor you trip on a straw and hit your head against the bar. You are dead.`,
+      text: `${playerName}, you are a mess. While walking back to the dance floor you trip on a straw and hit your head against the bar. You are dead.`,
       options: [{
         text: "Play again!",
         nextText: -1
@@ -876,7 +902,7 @@ function getTextNodes(playerName) {
 
     {
       id: 2.5,
-      text: `You are so boring that on your way back to the dance floor you choke on your water and die. Why are you even playing this game? Try again.`,
+      text: `${playerName}, you are so boring that on your way back to the dance floor you choke on your water and die. Why are you even playing this game? Try again.`,
       options: [{
         text: "Play again!",
         nextText: -1
@@ -915,7 +941,7 @@ function getTextNodes(playerName) {
 
     {
       id: 2.8,
-      text: `Being the drunk skunk that you are, you forget what the girl just said and turn left. Only problem is that turning left doesn’t actually lead to a road, but to a river. You somehow manage to fall over the railing and down to your death. Oh dear, you really are a lightweight.`,
+      text: `Being the drunk skunk that you are, you forget what the girl just said and turn left. Only problem is that turning left doesn’t actually lead to a road, but to a river. You somehow manage to fall over the railing and down to your death. Oh dear ${playerName}, you really are a lightweight.`,
       options: [{
         text: "Play again!",
         nextText: -1
@@ -924,7 +950,7 @@ function getTextNodes(playerName) {
 
     {
       id: 2.9,
-      text: `You seems to have trouble with following simple instructions. You are given a second chance. Try again.`,
+      text: `You seems to have trouble with following simple instructions. You are given a second chance. ${playerName}, step it up.`,
       options: [{
         text: "Thanks for the opportunity",
         nextText: 2.7
@@ -1035,10 +1061,17 @@ function getTextNodes(playerName) {
       text: `Julie tells you that she got a call from the hospital and that her mom is very sick. The doctors don’t know how to help since it’s an unknown virus.`,
       options: [{
           text: "Tell Julie everything is going to be fine",
+          setState: {
+            drunk: false,
+          },
           nextText: 3.3
+
         },
         {
           text: "Ask Julie what she knows so far",
+          setState: {
+            drunk: false,
+          },
           nextText: 3.3
         }
       ]
