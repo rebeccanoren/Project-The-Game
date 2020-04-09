@@ -193,7 +193,7 @@ function input() {
       playerName = input.value
       setTimeout(function () {
         startGame();
-      }, 3000);
+      }, 2000);
     })
   }
 }
@@ -230,7 +230,7 @@ function showTextNode(textNodeIndex) {
     textElement.innerHTML = textNode.text
     textElement.classList.remove('animated', "fadeOutUp");
     textElement.classList.add('animated', "fadeInUp");
-  }, 1000);
+  }, 500);
   while (optionButtonsElement.firstChild) {
     optionButtonsElement.removeChild(optionButtonsElement.firstChild)
     textElement.innerHTML = ""
@@ -253,12 +253,12 @@ function showTextNode(textNodeIndex) {
             selectOption(option)
             updateInventory()
             renderInventory()
-          }, 1000);
+          }, 500);
         })
         optionButtonsElement.appendChild(button)
       }
     })
-  }, 3000);
+  }, 2000);
 
 
   // Update inventory status depending on state from textNodes
@@ -443,7 +443,7 @@ const inventory = {
 function getTextNodes(playerName) {
   return [{
       id: 1.1,
-      text: `You find yourself out partying with your friends. What will you order at the bar?`,
+      text: `You find yourself out partying with your friend. What will you order at the bar?`,
       options: [{
           text: "Margarita 🍸",
           setState: {
@@ -528,9 +528,9 @@ function getTextNodes(playerName) {
 
     {
       id: 1.6,
-      text: `Jessie is working at the city’s health centre as a doctor. You tell him about you work as a...`,
+      text: `Jessie is working at the city’s health centre as a doctor. You tell him about you work as...`,
       options: [{
-          text: "Conversation Architect",
+          text: "A Conversation Architect",
           nextText: 1.7
         },
         {
@@ -538,7 +538,7 @@ function getTextNodes(playerName) {
           nextText: 1.7
         },
         {
-          text: "Teddy Bear Surgeon",
+          text: "A Teddy Bear Surgeon",
           nextText: 1.7
         },
         {
@@ -586,7 +586,7 @@ function getTextNodes(playerName) {
           setState: {
             talkedToJessie: true
           },
-          nextText: 1.21
+          nextText: 1.16
         },
         {
           text: "Leave Jessie and look for Julie",
@@ -873,14 +873,15 @@ function getTextNodes(playerName) {
           nextText: 2.5
         },
 
-        // {
-        //   text: "Go to the dance floor",
-        //   requiredState: (currentState) => !currentState.boringFirst && !currentState.boringSecond && !currentState.boringThird,
-        //   setStateGame: {
-        //     dead: true,
-        //   },
-        //   nextText: 2.5
-        // },
+        {
+          text: "Go to the dance floor",
+          requiredState: (currentState) => !currentState.boringFirst && !currentState.boringSecond && !currentState.boringThird && !currentState.drunk,
+          setStateGame: {
+            dead: true,
+          },
+          nextText: 2.5
+        },
+
         //Drunk
         {
           text: "Go to the dance floor",
