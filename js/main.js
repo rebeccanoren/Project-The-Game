@@ -1378,7 +1378,7 @@ function getTextNodes(playerName) {
           nextText: 3.21
         },
         {
-          text: "Go all the way back to your own place",
+          text: "Travel all he way back to your hometown",
           setStateGame: {
             dead: true,
           },
@@ -1430,7 +1430,7 @@ function getTextNodes(playerName) {
 
     {
       id: 3.19,
-      text: `You decide to take all the information about the virus that you’ve gotten, and throw it in the trash. The town is in lockdown and there’s no way to get home. You’re now dead.`,
+      text: `${playerName}, you decide to take all the information about the virus that you’ve gotten, and throw it in the trash. The town is in lockdown and there’s no way to get home. You’re now dead.`,
       options: [{
         text: "Try again!",
         nextText: -1
@@ -1439,7 +1439,7 @@ function getTextNodes(playerName) {
 
     {
       id: 3.21,
-      text: `You decide to stay at Julie’s place. It is after all the smartest choice considering the lockdown. You suddenly start to feel ill. Come to think about it, the girl you hugged in the club was also looking quite ill. Maybe her sniffling wasn’t from crying...? You die on the spot, it must be a record of the quickest death-by-virus ever. Congratulations.<br><br> You got the “At Least You Tried” end. Ouch, you really need to be more careful. But hey, at least you got to the end!`,
+      text: `You decide to stay at Julie’s place. It is after all the smartest choice considering the lockdown. You suddenly start to feel ill. Come to think about it, the girl you hugged in the club was also looking quite ill. Maybe her sniffling wasn’t from crying...? You die on the spot, it must be a record of the quickest death-by-virus ever. Congratulations.<br><br> You got the “At Least You Tried” end. Ouch, you really need to be more careful. But hey, at least you got to the end ${playerName}!`,
       options: [{
         text: "Try again!",
         nextText: -1
@@ -1459,7 +1459,7 @@ function getTextNodes(playerName) {
     {
       id: 3.23,
       text: `You decide to call Jessie. Jessie picks up the phone and is happy to help. Jessie guides you to survive this virus and you come out on top of the world. Or maybe not the world but at least you survive and that is after all the important bits, right? <br><br>
-      You got the “Surviving Like a BOSS” end. Great job!`,
+      You got the “Surviving Like a BOSS” end. Great job ${playerName}!`,
       options: [{
         text: "Play again!",
         nextText: -1
