@@ -105,6 +105,8 @@ tippy('[data-tippy-content]', {
   animation: 'scale',
 });
 
+
+// Select DOM elements
 let head = document.querySelector(".head")
 let startAdventureButton = document.querySelector("#start")
 let name = document.querySelector(".name")
@@ -114,8 +116,10 @@ let soundImg = document.querySelector(".mute-btn img")
 let background = document.querySelector(".overlay")
 let playerName = ""
 
+
 soundOnoff.addEventListener("click", checkSound)
 
+// Turn music on and off
 function checkSound() {
   let sound = document.createElement('img');
   sound.src = "./assets/sound.svg"
@@ -131,12 +135,13 @@ function checkSound() {
     soundOnoff.classList.remove("sound-on")
   }
 }
-
-startAdventureButton.addEventListener("click", introInput)
+// Turn background music on
 backgroundMusic.play()
+startAdventureButton.addEventListener("click", introInput)
 
+// Removes head and 
 function introInput() {
-  head.classList.add('animated', "fadeOutUp")
+  head.classList.add('animated', "fadeOutUp");
   buttonSound.play();
   setTimeout(function () {
     remove(head);
@@ -148,11 +153,12 @@ function remove(element) {
   element.remove()
 }
 
+// Typewriter effect
 function write(callback) {
   let div = document.createElement("div");
   document.querySelector('.name').appendChild(div);
 
-  var typewriter = new Typewriter(div, {
+  let typewriter = new Typewriter(div, {
     loop: false
   });
 
@@ -164,11 +170,7 @@ function write(callback) {
     .callFunction(callback)
 }
 
-function doneWriting() {
-  alert("Writing is done!");
-}
-
-
+// Adding input field for player name
 function input() {
   let input = document.createElement("input");
   input.type = "text";
@@ -180,7 +182,7 @@ function input() {
     once: true
   })
 
-
+  // Adding start button after user input
   function addButton() {
     let buttonStart = document.createElement("button");
     buttonStart.id = "next"
@@ -195,15 +197,15 @@ function input() {
     })
   }
 }
-// Game functionality
 
 const textElement = document.getElementById("text")
 const optionButtonsElement = document.getElementById('option-buttons')
 
-//Håller koll på spelet
+//Kepping track of inventory and winning/loosing states
 let state = {}
 let stateGame = {}
 
+// Fades out intro music and starts the game
 function startGame() {
   backgroundMusic.fade(0.4, 0, 3000);
   partySound.play()
@@ -216,10 +218,12 @@ function startGame() {
   }, 500);
 }
 
+// Reloads the site
 function reStart() {
   window.location.reload();
 }
 
+// Showing textnodes and options
 function showTextNode(textNodeIndex) {
   const textNode = getTextNodes(playerName).find(textNode => textNode.id === textNodeIndex)
   setTimeout(function () {
@@ -239,6 +243,8 @@ function showTextNode(textNodeIndex) {
         button.classList.add('animated', "fadeInUp");
         button.addEventListener("click", function () {
           buttonSound.play()
+
+          // Animate text and buttons
           textElement.classList.remove('animated', "fadeInUp");
           textElement.classList.add('animated', "fadeOutUp");
           button.classList.remove('animated', "fadeInUp");
@@ -254,6 +260,8 @@ function showTextNode(textNodeIndex) {
     })
   }, 3000);
 
+
+  // Update inventory status depending on state from textNodes
   function updateInventory() {
     for (let key in state) {
       if (!inventory[key]) {
@@ -263,7 +271,7 @@ function showTextNode(textNodeIndex) {
       state[key] ? inventory[key].status = true : inventory[key].status = false
     }
   }
-
+  // Check loosing condition
   function checkIfDead() {
     if (stateGame.dead == true) {
       let background = document.querySelector(".overlay")
@@ -281,7 +289,7 @@ function showTextNode(textNodeIndex) {
     }
   }
 
-
+  // Check winning condition
   function checkIfWinning() {
     if (stateGame.winning == true) {
       let background = document.querySelector(".overlay")
@@ -299,51 +307,51 @@ function showTextNode(textNodeIndex) {
     }
   }
 
+  // Stop all music
   function stopAllMusic() {
     partySound.pause()
     storeSound.pause()
     storeSecondsSound.pause()
+    TvSound.pause()
     outsideSound.pause()
   }
 
+  // Check state
   function showOption(option) {
     return option.requiredState == null || option.requiredState(state)
   }
 
   function selectOption(option) {
     const nextTextNodeId = option.nextText
+    // Restart game
     if (nextTextNodeId <= 0) {
       return reStart()
     }
+
+    // Changing sound effects and classes
     if (nextTextNodeId == 1.15) {
       document.querySelector(".main_content").classList.add("dizzy");
     }
-
     if (nextTextNodeId == 2.6) {
       partySound.pause()
       outsideSound.play()
     }
-
     if (nextTextNodeId == 3.1) {
       outsideSound.pause()
     }
-
     if (nextTextNodeId == 3.3) {
       if (state.drunk == true) {
         document.querySelector(".main_content").classList.remove("dizzy");
       }
     }
-
-
     if (nextTextNodeId == 3.5) {
       TvSound.play()
     }
-
     if (nextTextNodeId == 3.8) {
+      TvSound.pause()
       storeSound.play()
       storeSecondsSound.play()
     }
-
     if (nextTextNodeId == 3.18 || nextTextNodeId == 3.17) {
       storeSound.pause()
       storeSecondsSound.play()
@@ -384,6 +392,7 @@ function renderInventory() {
   }
 }
 
+// All inventory items
 const inventory = {
   margarita: {
     name: "Margarita",
@@ -430,6 +439,7 @@ const inventory = {
 
 }
 
+// All text nodes
 function getTextNodes(playerName) {
   return [{
       id: 1.1,
@@ -456,29 +466,6 @@ function getTextNodes(playerName) {
           },
           nextText: 1.2
         },
-        // {
-        //   text: "Full",
-        //   setState: {
-        //     margarita: true,
-        //     number: true,
-        //   },
-        //   nextText: 1.14
-        // },
-        // {
-        //   text: "Till 3.1",
-        //   setState: {
-        //     margarita: true,
-        //     number: true,
-        //   },
-        //   nextText: 3.1
-        // },
-        // {
-        //   text: "Vinst",
-        //   setStateGame: {
-        //     winning: true,
-        //   },
-        //   nextText: 3.23,
-        // },
       ]
     },
     {
@@ -595,6 +582,15 @@ function getTextNodes(playerName) {
       text: `Speaking of Julie... where is she? You haven't seen her for a while.<br><br> What do you want to do?`,
       options: [{
           text: "Leave Jessie and look for Julie",
+          requiredState: (currentState) => !currentState.balloon,
+          setState: {
+            talkedToJessie: true
+          },
+          nextText: 1.21
+        },
+        {
+          text: "Leave Jessie and look for Julie",
+          requiredState: (currentState) => currentState.balloon,
           nextText: 2.1
         },
         {
@@ -667,6 +663,9 @@ function getTextNodes(playerName) {
         },
         {
           text: "Ask for Jessies number",
+          setState: {
+            drunk: true
+          },
           nextText: 1.12
         },
       ]
@@ -721,10 +720,9 @@ function getTextNodes(playerName) {
       ]
     },
 
-
     {
       id: 1.19,
-      text: "This feels a bit weird. Don't you think? <br><br>What do you do now?",
+      text: `This feels a bit weird. Don't you think, ${playerName}? <br><br>What do you do now?`,
       options: [{
           text: "Go to the dance floor",
           setState: {
@@ -737,8 +735,8 @@ function getTextNodes(playerName) {
           nextText: 1.3
         },
         {
-          text: "Look around for your friend Julie",
-          nextText: 1.16
+          text: "Look for your friend Julie",
+          nextText: 1.21,
         },
       ]
     },
@@ -747,12 +745,22 @@ function getTextNodes(playerName) {
       id: 1.21,
       text: `You walk through the club and can’t seem to find her anywhere. But on your way you found a helium balloon shaped as a bird. It sees cool.`,
       options: [{
-        text: "Pick it up and go back to the bar",
-        setState: {
-          balloon: true
+          text: "Pick it up and go back to the bar",
+          requiredState: (currentState) => !currentState.talkedToJessie,
+          setState: {
+            balloon: true
+          },
+          nextText: 1.22
         },
-        nextText: 1.22
-      }, ]
+        {
+          text: "Pick it up and go to the dance floor",
+          requiredState: (currentState) => currentState.talkedToJessie,
+          setState: {
+            balloon: true
+          },
+          nextText: 2.1
+        },
+      ]
     },
 
     {
@@ -926,11 +934,20 @@ function getTextNodes(playerName) {
       Where do you want to go?`,
       options: [{
           text: "Go left",
-          requiredState: (currentState) => !currentState.wentLeft,
+          requiredState: (currentState) => !currentState.wentLeft && !currentState.drunk,
           nextText: 2.9,
           setState: {
             wentLeft: true
           },
+        },
+        {
+          text: "Go left",
+          requiredState: (currentState) => currentState.drunk,
+          nextText: 2.8,
+          setStateGame: {
+            dead: true
+          },
+
         },
         {
           text: "Go right",
@@ -1082,10 +1099,16 @@ function getTextNodes(playerName) {
       text: `Julie thanks you and then drops you off at her place. She is going directly to the hospital. You decide to go to sleep and when you wake up Julie is still not home.<br><br> What do you do now?`,
       options: [{
           text: "Turn on the TV",
+          setState: {
+            watchedTv: true,
+          },
           nextText: 3.5
         },
         {
           text: "Check your phone ",
+          setState: {
+            checkedPhone: true,
+          },
           nextText: 3.6
         }
       ]
@@ -1342,7 +1365,7 @@ function getTextNodes(playerName) {
         },
         {
           text: "Stay at Julie’s place",
-          requiredState: (currentState) => !currentState.number,
+          requiredState: (currentState) => !currentState.number && !currentState.virus,
           nextText: 3.18
         },
         {
@@ -1365,7 +1388,7 @@ function getTextNodes(playerName) {
 
     {
       id: 3.16,
-      text: `Why did you do this? How is this going to help you? You just wanted to be difficult, didn’t you?`,
+      text: `Why did you do this ${playerName}? How is this going to help you? You just wanted to be difficult, didn’t you?`,
       options: [{
         text: "Try again!",
         nextText: -1
