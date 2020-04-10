@@ -868,15 +868,6 @@ function getTextNodes(playerName) {
           nextText: 2.5
         },
 
-        {
-          text: "Go to the dance floor",
-          requiredState: (currentState) => !currentState.boringFirst && !currentState.boringSecond && !currentState.boringThird && !currentState.drunk,
-          setStateGame: {
-            dead: true,
-          },
-          nextText: 2.5
-        },
-
         //Drunk
         {
           text: "Go to the dance floor",
