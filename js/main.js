@@ -1378,7 +1378,7 @@ function getTextNodes(playerName) {
           nextText: 3.21
         },
         {
-          text: "Travel all he way back to your hometown",
+          text: "Travel all the way back to your hometown",
           setStateGame: {
             dead: true,
           },
@@ -1398,7 +1398,7 @@ function getTextNodes(playerName) {
 
     {
       id: 3.17,
-      text: `You decide to stay at Julie’s place. It is, after all, the smartest choice considering the lockdown. She gets home and now you two need a plan. You remember that Jessie from the club is a doctor and might be able to help. <br><br> What do you do?`,
+      text: `You decide to stay at Julie’s place. It is, after all, the smartest choice considering the lockdown. She gets home and now you two need a plan. If only you knew someone else in this town... <br><br> What do you do?`,
       options: [{
           text: "Call Jessie",
           setStateGame: {
@@ -1418,7 +1418,7 @@ function getTextNodes(playerName) {
 
     {
       id: 3.18,
-      text: `You decide to stay at Julie’s place. It is, after all, the smartest choice considering the lockdown. She gets home and now you two need a plan. You remember that Jessie from the club is a doctor and might be able to help. <br><br> What do you do?`,
+      text: `You decide to stay at Julie’s place. It is, after all, the smartest choice considering the lockdown. She gets home and now you two need a plan. If only you knew someone else in this town... <br><br> What do you do?`,
       options: [{
         text: "Build a pillow fort with Julie",
         setStateGame: {
