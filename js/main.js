@@ -767,14 +767,9 @@ function getTextNodes(playerName) {
       id: 1.22,
       text: "Perhaps the stranger in the bar could be interesting?",
       options: [{
-          text: "Say something",
-          nextText: 1.3
-        },
-        {
-          text: "Keep sipping on your drink",
-          nextText: 1.19
-        },
-      ]
+        text: "Say something",
+        nextText: 1.3
+      }, ]
     },
 
     {
